@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 public class Rx2Test {
 
@@ -98,4 +100,28 @@ public class Rx2Test {
     return (System.currentTimeMillis() - start) % 30_000 >= 15_000;
   }
 
+
+  public void testOb() {
+    Subscriber light = new Subscriber() {
+      @Override
+      public void onSubscribe(Subscription s) {
+
+      }
+
+      @Override
+      public void onNext(Object o) {
+        out.println("observing next, handling " + o);
+      }
+
+      @Override
+      public void onError(Throwable t) {
+        out.println("observing Errors ");
+      }
+
+      @Override
+      public void onComplete() {
+        out.println("observing Completed ");
+      }
+    };
+  }
 }
