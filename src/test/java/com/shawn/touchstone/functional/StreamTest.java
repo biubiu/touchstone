@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.Test;
 
@@ -117,7 +118,8 @@ public class StreamTest {
     String longerThanShangfei = friends.stream().reduce("shangfei", (name1, name2) -> name1.length() > name2.length() ? name1: name2);
     Optional<String> longest = friends.stream().reduce((name1, name2) -> name1.length() > name2.length() ? name1: name2);
     System.out.println(longest);
-
+    System.out.println(longerThanShangfei);
+    System.out.println(IntStream.range(0, 10).reduce(1, (a, b) -> a + b));
   }
 
   @Test

@@ -8,11 +8,7 @@
 
 package com.shawn.touchstone;
 
-import com.shawn.touchstone.reflection.Coding;
-import com.shawn.touchstone.reflection.SeniorProgrammer;
 import org.junit.Test;
-
-import java.lang.reflect.Proxy;
 
 public class ReflectionTest {
 
