@@ -1,35 +1,28 @@
-/*
- * Copyright (C) 2020 Covata Limited or its affiliates
- *
- * Information contained within this file cannot be copied,
- * distributed and/or practised without the written consent of
- * Covata Limited or its affiliates.
- */
-
 package com.shawn.touchstone.metrics.reporter;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.shawn.touchstone.metrics.Aggregator;
 import com.shawn.touchstone.metrics.MetricsStorage;
+import com.shawn.touchstone.metrics.RedisMetricsStorage;
+import com.shawn.touchstone.metrics.reporter.viewer.EmailViewer;
 import com.shawn.touchstone.metrics.reporter.viewer.StatViewer;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EmailReporter extends ScheduledReporter{
+public class EmailReporter extends ScheduledReporter {
     private static final Long DAY_HOURS_IN_SECONDS = 86400L;
-    private List<String> toAddresses = new ArrayList<>();
 
+    public EmailReporter() {
+        this(new RedisMetricsStorage(), new Aggregator(), new EmailViewer());
+    }
     public EmailReporter(MetricsStorage metricsStorage, Aggregator aggregator, StatViewer statViewer) {
         super(metricsStorage, aggregator, statViewer);
     }
 
     public void addToAddress(String address) {
-        toAddresses.add(address);
+        super.viewer.addRecipients(address);
     }
 
     public void startDailyReport() {

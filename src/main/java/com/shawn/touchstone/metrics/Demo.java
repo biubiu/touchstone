@@ -22,12 +22,10 @@ public class Demo {
         Gson gson = new Gson();
         MetricsStorage storage = new RedisMetricsStorage();
         Aggregator aggregator = new Aggregator();
-        StatViewer console = new ConsoleViewer(gson);
-        StatViewer email = new EmailViewer(new EmailSender(), new ArrayList<>());
-        ConsoleReporter consoleReporter = new ConsoleReporter(storage, aggregator, console);
+        ConsoleReporter consoleReporter = new ConsoleReporter();
         consoleReporter.startRepeatedReport(60, 60);
 
-        EmailReporter emailReporter = new EmailReporter(storage, aggregator, email);
+        EmailReporter emailReporter = new EmailReporter();
         emailReporter.addToAddress("wangzheng@xzg.com");
         emailReporter.startDailyReport();
 
