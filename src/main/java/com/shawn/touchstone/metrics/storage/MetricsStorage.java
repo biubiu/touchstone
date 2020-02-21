@@ -6,7 +6,7 @@
  * Covata Limited or its affiliates.
  */
 
-package com.shawn.touchstone.metrics;
+package com.shawn.touchstone.metrics.storage;
 
 import com.shawn.touchstone.metrics.models.RequestInfo;
 
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MetricsStorage {
+
     void saveRequestInfo(RequestInfo requestInfo);
 
     List<RequestInfo> getRequestInfos(String apiName, long startTime, long endTime);

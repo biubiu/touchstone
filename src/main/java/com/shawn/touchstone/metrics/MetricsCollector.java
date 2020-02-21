@@ -12,6 +12,8 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.shawn.touchstone.metrics.models.RequestInfo;
+import com.shawn.touchstone.metrics.storage.MemMetricsStorage;
+import com.shawn.touchstone.metrics.storage.MetricsStorage;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.Executors;
@@ -25,8 +27,9 @@ public class MetricsCollector {
     private EventBus eventBus;
 
     public MetricsCollector() {
-        this(new RedisMetricsStorage(), DEFAULT_STORAGE_THREAD_POOL_SIZE);
+        this(new MemMetricsStorage(), DEFAULT_STORAGE_THREAD_POOL_SIZE);
     }
+
     public MetricsCollector(MetricsStorage metricsStorage, int threadNumToSaveDate) {
         this.metricsStorage = metricsStorage;
         this.eventBus = new AsyncEventBus(Executors.newFixedThreadPool(threadNumToSaveDate));

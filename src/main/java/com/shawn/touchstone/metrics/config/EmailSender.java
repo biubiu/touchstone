@@ -22,7 +22,7 @@ public class EmailSender {
     private static final String EMAIL_FROM = "From@gmail.com";
 
 
-    private static EmailSender emailSender;
+    private static volatile EmailSender instance;
     private Properties prop;
     private static final String EMAIL_SUBJECT = "Subject";
     private static final String SMTP_SERVER = "smtp server ";
@@ -31,15 +31,18 @@ public class EmailSender {
     private EmailSender(){}
 
     public static EmailSender getInstance() {
-        synchronized (EmailSender.class) {
-            if (emailSender == null) {
-                Properties prop = System.getProperties();
-                prop.put("mail.smtp.auth", "true");
-                emailSender = new EmailSender();
+            if (null == instance) {
+                synchronized (EmailSender.class) {
+                    if (null == instance) {
+                        Properties prop = System.getProperties();
+                        prop.put("mail.smtp.auth", "true");
+                        instance = new EmailSender();
+                    }
             }
-            return emailSender;
         }
+        return instance;
     }
+
 
     public void send(List<String> emails, String content) throws MessagingException {
         Session session = Session.getInstance(prop, null);

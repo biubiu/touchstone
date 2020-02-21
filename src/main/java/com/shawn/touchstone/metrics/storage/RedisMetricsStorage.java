@@ -1,4 +1,4 @@
-package com.shawn.touchstone.metrics;
+package com.shawn.touchstone.metrics.storage;
 
 import com.shawn.touchstone.metrics.models.RequestInfo;
 

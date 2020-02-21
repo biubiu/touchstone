@@ -11,8 +11,9 @@ package com.shawn.touchstone.metrics.reporter;
 
 import com.google.gson.Gson;
 import com.shawn.touchstone.metrics.Aggregator;
-import com.shawn.touchstone.metrics.MetricsStorage;
-import com.shawn.touchstone.metrics.RedisMetricsStorage;
+import com.shawn.touchstone.metrics.storage.MemMetricsStorage;
+import com.shawn.touchstone.metrics.storage.MetricsStorage;
+import com.shawn.touchstone.metrics.storage.RedisMetricsStorage;
 import com.shawn.touchstone.metrics.reporter.viewer.ConsoleViewer;
 import com.shawn.touchstone.metrics.reporter.viewer.StatViewer;
 
@@ -27,7 +28,7 @@ public class ConsoleReporter extends  ScheduledReporter{
     private transient  Boolean isRunning = false;
 
     public ConsoleReporter() {
-        this(new RedisMetricsStorage(), new Aggregator(), new ConsoleViewer(new Gson()));
+        this(new MemMetricsStorage(), new Aggregator(), new ConsoleViewer(new Gson()));
     }
     public ConsoleReporter(MetricsStorage metricsStorage, Aggregator aggregator,
                            StatViewer statViewer) {

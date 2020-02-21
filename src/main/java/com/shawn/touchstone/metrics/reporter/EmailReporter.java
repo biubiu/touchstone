@@ -2,8 +2,9 @@ package com.shawn.touchstone.metrics.reporter;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.shawn.touchstone.metrics.Aggregator;
-import com.shawn.touchstone.metrics.MetricsStorage;
-import com.shawn.touchstone.metrics.RedisMetricsStorage;
+import com.shawn.touchstone.metrics.storage.MemMetricsStorage;
+import com.shawn.touchstone.metrics.storage.MetricsStorage;
+import com.shawn.touchstone.metrics.storage.RedisMetricsStorage;
 import com.shawn.touchstone.metrics.reporter.viewer.EmailViewer;
 import com.shawn.touchstone.metrics.reporter.viewer.StatViewer;
 import java.util.Calendar;
@@ -15,7 +16,7 @@ public class EmailReporter extends ScheduledReporter {
     private static final Long DAY_HOURS_IN_SECONDS = 86400L;
 
     public EmailReporter() {
-        this(new RedisMetricsStorage(), new Aggregator(), new EmailViewer());
+        this(new MemMetricsStorage(), new Aggregator(), new EmailViewer());
     }
     public EmailReporter(MetricsStorage metricsStorage, Aggregator aggregator, StatViewer statViewer) {
         super(metricsStorage, aggregator, statViewer);

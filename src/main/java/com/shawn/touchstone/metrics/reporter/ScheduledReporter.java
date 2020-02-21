@@ -1,7 +1,7 @@
 package com.shawn.touchstone.metrics.reporter;
 
 import com.shawn.touchstone.metrics.Aggregator;
-import com.shawn.touchstone.metrics.MetricsStorage;
+import com.shawn.touchstone.metrics.storage.MetricsStorage;
 import com.shawn.touchstone.metrics.models.RequestInfo;
 import com.shawn.touchstone.metrics.models.RequestStat;
 import com.shawn.touchstone.metrics.reporter.viewer.StatViewer;

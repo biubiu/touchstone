@@ -4,12 +4,9 @@ import com.google.gson.Gson;
 import com.shawn.touchstone.metrics.models.RequestInfo;
 import com.shawn.touchstone.metrics.reporter.ConsoleReporter;
 import com.shawn.touchstone.metrics.reporter.EmailReporter;
-import com.shawn.touchstone.metrics.reporter.viewer.EmailViewer;
-import com.shawn.touchstone.metrics.reporter.viewer.StatViewer;
-import com.shawn.touchstone.metrics.reporter.viewer.ConsoleViewer;
-import com.shawn.touchstone.metrics.config.EmailSender;
+import com.shawn.touchstone.metrics.storage.MetricsStorage;
+import com.shawn.touchstone.metrics.storage.RedisMetricsStorage;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Demo {
