@@ -27,11 +27,11 @@ public class Demo {
         emailReporter.startDailyReport();
 
         MetricsCollector collector = new MetricsCollector();
-        collector.recordRequest(new RequestInfo("register", 123.0, 10234));
-        collector.recordRequest(new RequestInfo("register", 223.1, 11234));
-        collector.recordRequest(new RequestInfo("register", 323.0, 12334));
-        collector.recordRequest(new RequestInfo("login", 23.0, 12434));
-        collector.recordRequest(new RequestInfo("login", 1223.0, 14234));
+        collector.recordRequest(new RequestInfo("register", 123.0, 10234l));
+        collector.recordRequest(new RequestInfo("register", 223.1, 11234l));
+        collector.recordRequest(new RequestInfo("register", 323.0, 12334l));
+        collector.recordRequest(new RequestInfo("login", 23.0, 12434l));
+        collector.recordRequest(new RequestInfo("login", 1223.0, 14234l));
 
         try {
             TimeUnit.SECONDS.sleep(10);
