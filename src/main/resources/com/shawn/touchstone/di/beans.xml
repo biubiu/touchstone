@@ -1,8 +1,8 @@
 <beans>
-    <bean id = "rateLimiter" class = "com.shawn.touchstone.di.beans.RateLimiter">
+    <bean id = "rateLimiter" clazz = "com.shawn.touchstone.di.beans.RateLimiter">
         <constructor-arg ref = "redisCounter" />
     </bean>
-    <bean id = "redisCounter" class = "com.shawn.touchstone.di.beans.RedisCounter">
+    <bean id = "redisCounter" clazz = "com.shawn.touchstone.di.beans.RedisCounter">
         <constructor-arg type="String" value = "127.0.0.1" />
         <constructor-arg type="Integer" value="123" />
     </bean>

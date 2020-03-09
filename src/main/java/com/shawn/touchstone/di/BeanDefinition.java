@@ -16,6 +16,11 @@ public class BeanDefinition {
         return scope.equals(Scope.SINGLETON);
     }
 
+    /**
+     * 在下面的 ConstructorArg 类中，
+     * isRef = true，arg 表示 String 类型的 refBeanId，type 不需要设置；
+     * isRef = false，arg、type 都需要设置。请根据这个需求，完善 ConstructorArg 类
+     */
     @Data
     public static class ConstructorArg {
         private boolean isRef;

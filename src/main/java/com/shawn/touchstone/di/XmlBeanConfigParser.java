@@ -21,12 +21,13 @@ public class XmlBeanConfigParser implements BeanConfigParser {
         this.xStream = new XStream();
         this.xStream.processAnnotations(RawBean.class);
         this.xStream.processAnnotations(RawConstructorArg.class);
+        this.xStream.alias("beans", List.class);
     }
 
     @Override
     public List<BeanDefinition> parse(InputStream inputStream) {
-        List<RawBean> rawObjs = (List<RawBean>)xStream.fromXML(this.getClass().getResourceAsStream("beans.xml"));
-        return convert(rawObjs);
+        List<RawBean> beans = (List<RawBean>)xStream.fromXML(inputStream);
+        return convert(beans);
     }
 
     private List<BeanDefinition> convert(List<RawBean> raws) {
@@ -44,10 +45,12 @@ public class XmlBeanConfigParser implements BeanConfigParser {
             BeanDefinition.ConstructorArg arg = new BeanDefinition.ConstructorArg();
             arg.setArg(r.value);
             arg.setRef(to(r.ref));
-            try {
-                arg.setType(forName(r.type));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            if (null != r.type) {
+                try {
+                    arg.setType(forName(r.type));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
             args.add(arg);
         });
@@ -56,7 +59,7 @@ public class XmlBeanConfigParser implements BeanConfigParser {
     }
 
     private Boolean to(String val) {
-        return StringUtils.isEmpty(val) &&
+        return !StringUtils.isEmpty(val) &&
                 val.equalsIgnoreCase("true") ? true : false;
     }
     @XStreamAlias("bean")
@@ -68,7 +71,7 @@ public class XmlBeanConfigParser implements BeanConfigParser {
         private List<RawConstructorArg> cons;
 
         @XStreamAsAttribute
-        @XStreamAlias("class")
+        @XStreamAlias("clazz")
         private String clazz;
 
         @XStreamAsAttribute
