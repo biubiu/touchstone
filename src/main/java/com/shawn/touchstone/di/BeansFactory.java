@@ -38,14 +38,14 @@ public class BeansFactory {
         Object bean = null;
         try {
             Class beanClass = Class.forName(beanDefinition.getClassName());
-            List<BeanDefinition.ConstructorArg> args = beanDefinition.getConstructorArgs();
+            List<ConstructorArg> args = beanDefinition.getConstructorArgs();
             if (args.isEmpty()) {
                 bean = beanClass.newInstance();
             } else {
                 Class[] argClasses = new Class[args.size()];
                 Object[] argObjs = new Object[args.size()];
                 for (int i = 0; i < args.size(); i++) {
-                    BeanDefinition.ConstructorArg arg = args.get(i);
+                    ConstructorArg arg = args.get(i);
                     if (!arg.isRef()) {
                         argClasses[i] = arg.getType();
                         argObjs[i] = arg.getArg();

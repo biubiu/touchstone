@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.Class.forName;
-
 public class XmlBeanConfigParser implements BeanConfigParser {
     private XStream xStream;
 
@@ -40,18 +38,12 @@ public class XmlBeanConfigParser implements BeanConfigParser {
         beanDefinition.setId(raw.id);
         beanDefinition.setScope(BeanDefinition.Scope.SINGLETON);
         beanDefinition.setLazyInit(to(raw.lazyInit));
-        List<BeanDefinition.ConstructorArg> args = new ArrayList<>();
+        List<ConstructorArg> args = new ArrayList<>();
         raw.cons.forEach(r -> {
-            BeanDefinition.ConstructorArg arg = new BeanDefinition.ConstructorArg();
-            arg.setArg(r.value);
-            arg.setRef(to(r.ref));
-            if (null != r.type) {
-                try {
-                    arg.setType(forName(r.type));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
+            String ref = r.ref;
+            boolean isRef = StringUtils.isNotEmpty(ref);
+            ConstructorArg arg = new ConstructorArg.Builder().setIsRef(isRef)
+                    .setType(isRef ? ref : r.type).setArg(r.value).build();
             args.add(arg);
         });
         beanDefinition.setConstructorArgs(args);
@@ -59,8 +51,8 @@ public class XmlBeanConfigParser implements BeanConfigParser {
     }
 
     private Boolean to(String val) {
-        return !StringUtils.isEmpty(val) &&
-                val.equalsIgnoreCase("true") ? true : false;
+        return (!StringUtils.isEmpty(val) &&
+                val.equalsIgnoreCase("true"))? true : false;
     }
     @XStreamAlias("bean")
     public static class RawBean {
