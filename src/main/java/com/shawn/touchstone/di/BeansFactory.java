@@ -1,9 +1,12 @@
 package com.shawn.touchstone.di;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.reflect.Reflection;
 import com.shawn.touchstone.di.exceptions.BeanCreationFailureException;
 import com.shawn.touchstone.di.exceptions.NoSuchBeanDefinitionException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,6 +19,8 @@ public class BeansFactory {
     public void addBeanDefinitions(List<BeanDefinition> beanDefinitions) {
         beanDefinitions.forEach(bean -> {
             this.beanDefinitions.putIfAbsent(bean.getId(), bean);
+        });
+        beanDefinitions.forEach(bean -> {
             if (!bean.isLazyInit() && bean.isSingleton()) {
                 createBean(bean);
             }
@@ -32,10 +37,10 @@ public class BeansFactory {
 
     @VisibleForTesting
     protected Object createBean(BeanDefinition beanDefinition) {
-        if (beanDefinition.isSingleton() && singletonObjs.contains(beanDefinition.getId())) {
+        if (beanDefinition.isSingleton() && singletonObjs.containsKey(beanDefinition.getId())) {
             return singletonObjs.get(beanDefinition.getId());
         }
-        Object bean = null;
+        Object bean;
         try {
             Class beanClass = Class.forName(beanDefinition.getClassName());
             List<ConstructorArg> args = beanDefinition.getConstructorArgs();
@@ -47,8 +52,13 @@ public class BeansFactory {
                 for (int i = 0; i < args.size(); i++) {
                     ConstructorArg arg = args.get(i);
                     if (!arg.isRef()) {
-                        argClasses[i] = arg.getType();
-                        argObjs[i] = arg.getArg();
+                        Class clazz = arg.getType();
+                        Object val = arg.getArg();
+                        if (clazz == Integer.class || clazz == int.class) {
+                            val = Integer.parseInt((String) val);
+                        }
+                        argClasses[i] = clazz;
+                        argObjs[i] = val;
                     } else {
                         Object refName = arg.getArg();
                         BeanDefinition refBeanDefinition = beanDefinitions.get(refName);
@@ -59,8 +69,11 @@ public class BeansFactory {
                         argObjs[i] = createBean(refBeanDefinition);
                     }
                 }
+                Constructor constructor = beanClass.getConstructor(argClasses);
+                bean = constructor.newInstance(argObjs);
             }
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
+            NoSuchMethodException | InvocationTargetException e) {
             throw new BeanCreationFailureException(e.toString());
         }
 

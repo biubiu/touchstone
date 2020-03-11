@@ -43,7 +43,7 @@ public class XmlBeanConfigParser implements BeanConfigParser {
             String ref = r.ref;
             boolean isRef = StringUtils.isNotEmpty(ref);
             ConstructorArg arg = new ConstructorArg.Builder().setIsRef(isRef)
-                    .setType(isRef ? ref : r.type).setArg(r.value).build();
+                    .setType(r.type).setArg(isRef ? ref : r.value).build();
             args.add(arg);
         });
         beanDefinition.setConstructorArgs(args);

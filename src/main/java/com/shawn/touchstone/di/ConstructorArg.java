@@ -35,8 +35,8 @@ public class ConstructorArg {
             if (!isRef && (type == null || arg == null)) {
                 throw new IllegalArgumentException("not ref type but not set type and arg");
             }
-            if (isRef && (type != null || arg != null)) {
-                throw new IllegalArgumentException("is ref type but not set type and arg");
+            if (isRef && (type != null)) {
+                throw new IllegalArgumentException("is ref type but set type");
             }
             return new ConstructorArg(this);
         }
