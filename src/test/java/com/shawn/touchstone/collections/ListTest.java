@@ -29,4 +29,5 @@ public class ListTest {
         assertThat(partitions.get(0), contains(0, 1, 2));
         assertThat(arr, contains(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
+
 }
