@@ -1,6 +1,7 @@
 package com.shawn.touchstone.concurrent.util;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -49,6 +50,7 @@ public class CyclicBarrierDemo {
                     throw new RuntimeException(e.getCause());
                 }
             }
+            throw new RuntimeException();
         }
     }
 

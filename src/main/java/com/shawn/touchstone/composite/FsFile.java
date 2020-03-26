@@ -1,6 +1,4 @@
-package com.shawn.touchstone.fs;
-
-import lombok.SneakyThrows;
+package com.shawn.touchstone.composite;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package com.shawn.touchstone.fs;
+package com.shawn.touchstone.composite;
 
 import java.util.ArrayList;
 import java.util.List;
