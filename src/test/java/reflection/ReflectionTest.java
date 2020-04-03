@@ -6,9 +6,11 @@
  * Covata Limited or its affiliates.
  */
 
-package com.shawn.touchstone;
+package reflection;
 
 import org.junit.Test;
+
+import javax.xml.validation.Schema;
 
 public class ReflectionTest {
 
@@ -20,4 +22,5 @@ public class ReflectionTest {
         System.out.println(x);
         System.out.println(y);
     }
+
 }
