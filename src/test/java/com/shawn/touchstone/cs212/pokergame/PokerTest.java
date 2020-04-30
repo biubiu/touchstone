@@ -1,11 +1,13 @@
 package com.shawn.touchstone.cs212.pokergame;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableList.of;
 import static java.util.Collections.emptyList;
@@ -19,14 +21,15 @@ public class PokerTest {
 
     String[] sf = "6C 7C 8C 9C TC".split(" "); //straight flush
     String[] fk = "9D 9H 9S 9C 7D".split(" "); // four of a kind
-    String[] fh = "TD TC TH 7C TD".split(" "); //full house
+    String[] fh = "TD TC TH 7C 7D".split(" "); //full house
     String[] tp = "5D 5C 9H 9C 6S".split(" "); // two pairs
     String[] s1 = "AS 2S 3S 4S 5S".split(" "); // A-5 straight
     String[] s2 = "2C 3C 4C 5S 6S".split(" "); //2-6 straight
     String[] ah = "AS 2S 3S 4S 6S".split(" "); //A high
     String[] sh = "2S 3S 4S 6D 7D".split(" "); //7 high
 
-    private ExpectedException expected = ExpectedException.none();
+    @Rule
+    public ExpectedException expected = ExpectedException.none();
 
     @Before
     public void setup() {
@@ -35,13 +38,13 @@ public class PokerTest {
 
     @Test
     public void shouldReturnErrorWhenEmptyHands() {
-        poker.findHand(emptyList());
         expected.expect(IllegalArgumentException.class);
+        poker.findHand(emptyList());
     }
 
     @Test
     public void shouldReturnMaxHand() {
-        assertThat(poker.findHand(of(s1, s2, ah, sh)), is(s2));
+        assertThat(poker.findHand(of(s1, s2, ah, sh)), is(s1));
 
         assertThat(poker.findHand(of(sf, fk, fh)), is(sf));
 
@@ -51,10 +54,23 @@ public class PokerTest {
 
         assertThat(poker.findHand(of(fh)), is(fh));
 
-        List<String[]> fks = Collections.nCopies(99, fk);
-        fks.add(sf);
+    }
 
-        assertThat(poker.findHand(fks), is(sf));
+    @Test
+    public void shouldAbleToHandle100Hands() {
+        List<String[]> copied = new ArrayList<>();
+        IntStream.range(0, 99).forEach(o -> copied.add(fk));
+        copied.add(sf);
+        assertThat(poker.findHand(copied), is(sf));
+    }
+
+    @Test
+    public void testHandRank() {
+        List s2hand = poker.handRank(s2);
+
+        assertThat(s2hand, is(of(4, 6)));
+        List s1hand = poker.handRank(s1);
+        assertThat(s1hand, is(of(8, 5)));
     }
 
     @Test
