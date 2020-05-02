@@ -6,13 +6,16 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableList.of;
 import static java.util.Collections.emptyList;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class PokerTest {
@@ -99,7 +102,18 @@ public class PokerTest {
 
         assertThat(poker.flush(fk), is(false));
     }
-//
+
+    @Test
+    public void bestHandShouldReturnBest5cards(){
+        String[] hands = "6C 7C 8C 9C TC 5C JS".split(" ");
+        assertThat(Arrays.asList(poker.bestHand(hands)), containsInAnyOrder("6C 7C 8C 9C TC".split(" ")));
+    }
+
+    @Test
+    public void testCombination() {
+        Set<String[]> set = poker.combination(sf, 4);
+        Set<String[]> s = new HashSet<String[]>();
+    }
 //    @Test
 //    public void twoPairs() {
 //        List<Integer> fkRanks = poker.cardRank(fk);

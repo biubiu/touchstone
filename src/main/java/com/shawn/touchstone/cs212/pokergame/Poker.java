@@ -1,18 +1,24 @@
 package com.shawn.touchstone.cs212.pokergame;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.of;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toCollection;
@@ -96,21 +102,62 @@ public class Poker {
         List<Integer> sortedRank = Arrays.stream(hands).
                 map(o -> cardToInt(o)).sorted((o1, o2) -> Integer.compare(o2, o1)).collect(toList());
         if (sortedRank.equals(LOWER_STRAIGHT_REP)) {
-            return LOWER_STRAIGHT;
+            return Arrays.stream(LOWER_STRAIGHT).boxed().collect(toList());
         } else {
             return sortedRank;
         }
     }
 
-    private final String INDICS = "--23456789TJQKA";
+    private static final String INDICS = "--23456789TJQKA";
 
-    private final List<Integer> LOWER_STRAIGHT_REP = newArrayList(14, 5, 4, 3, 2);
+    private static final List<Integer> LOWER_STRAIGHT_REP = newArrayList(14, 5, 4, 3, 2);
 
-    private final List<Integer> LOWER_STRAIGHT = newArrayList(5, 4, 3, 2, 1);
+    private static final int[] LOWER_STRAIGHT = new int[]{5, 4, 3, 2, 1};
 
     private Integer cardToInt(String str) {
         Character ch = str.toCharArray()[0];
         return INDICS.indexOf(ch);
+    }
+
+    public String[] bestHand(String[] hands) {
+        Set<Set<String>> combination = Sets.combinations(Sets.newHashSet(hands), 5);
+        List<String[]> rawhands = combination.stream().map(o -> o.toArray(new String[]{})).collect(toList());
+        return this.findHand(rawhands);
+    }
+
+        public <T> Set<T[]> combination(T[] arr, int k) {
+        int len = arr.length;
+        if (k == 0) {
+            return emptySet();
+        }
+        if (k == len) {
+            return ImmutableSet.of(arr);
+        }
+        Set<T[]> result = new HashSet<>();
+        BitSet ignoreSet = new BitSet(arr.length - k);
+
+        for (int i = 0; i < len; i++) {
+            ignoreSet.set(i);
+            for (int j = i + 1; j < len; j++) {
+                ignoreSet.set(j);
+                result.add(sub(k,  arr, ignoreSet));
+                ignoreSet.clear(j);
+            }
+            ignoreSet.clear(i);
+        }
+
+        return result;
+    }
+
+    private <T> T[] sub(int k, T[] arr, BitSet ignoreSet) {
+        T[] tmp = (T[]) new Object[k];
+        int r = 0;
+        for (int m = 0; m < arr.length; m++) {
+            if (!ignoreSet.get(m)) {
+                tmp[r++] = arr[m];
+            }
+        }
+        return tmp;
     }
 
 //    //returns the first rank that the hand has exactly n of. For A hand with 4 sevens this function would return 7.

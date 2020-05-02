@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.guava:guava:21.0',
+    compile 'com.google.guava:guava:29.0-jre',
             'io.reactivex.rxjava2:rxjava:2.2.5',
             'io.projectreactor:reactor-core:3.0.3.RELEASE',
             'org.projectlombok:lombok:1.18.4',

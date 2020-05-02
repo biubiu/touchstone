@@ -1,6 +1,5 @@
 package com.shawn.touchstone.chainOfResponsibility;
 
-import com.shawn.touchstone.chainOfReponsibility.chain.ArrayHandlerChain;
 import com.shawn.touchstone.chainOfReponsibility.chain.HandlerChain;
 import com.shawn.touchstone.chainOfReponsibility.chain.ListHandlerChain;
 import com.shawn.touchstone.chainOfReponsibility.handlers.Handler;
