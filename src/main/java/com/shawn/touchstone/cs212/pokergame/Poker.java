@@ -2,8 +2,11 @@ package com.shawn.touchstone.cs212.pokergame;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.common.primitives.Chars;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -18,12 +21,14 @@ import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableList.of;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 public class Poker {
 
@@ -120,13 +125,17 @@ public class Poker {
     }
 
     public String[] bestHand(String[] hands) {
-        Set<Set<String>> combination = Sets.combinations(Sets.newHashSet(hands), 5);
-        List<String[]> rawhands = combination.stream().map(o -> o.toArray(new String[]{})).collect(toList());
-        return this.findHand(rawhands);
+        Set<String[]> combination = this.combinnation(hands, 5, String.class);
+
+        //List<String[]> rawhands = combination.stream().map(o -> (new String[]) o).collect(toList());
+        return this.findHand(Lists.newArrayList(combination));
     }
 
-        public <T> Set<T[]> combination(T[] arr, int k) {
+    public <T> Set<T[]> combinnation(T[] arr, int k, Class clazz) {
         int len = arr.length;
+        if (k > len) {
+            throw new IllegalArgumentException("k exceeds arr len");
+        }
         if (k == 0) {
             return emptySet();
         }
@@ -134,30 +143,76 @@ public class Poker {
             return ImmutableSet.of(arr);
         }
         Set<T[]> result = new HashSet<>();
-        BitSet ignoreSet = new BitSet(arr.length - k);
+        // combination index arr
+        int[] ptrs = new int[k];
 
-        for (int i = 0; i < len; i++) {
-            ignoreSet.set(i);
-            for (int j = i + 1; j < len; j++) {
-                ignoreSet.set(j);
-                result.add(sub(k,  arr, ignoreSet));
-                ignoreSet.clear(j);
+        int r = 0; // index of combination index arr
+        int i = 0; // index of arr
+        while (r >= 0) {
+            if (i <= (len + (r - k))) {
+                ptrs[r] = i;
+
+                // if combination array is full print and increment i;
+                if(r == k-1){
+                    result.add(subArr(k, arr, ptrs, clazz));
+                    i++;
+                } else {
+                    i = ptrs[r] + 1;
+                    r++;
+                }
+            } else {
+                r--;
+                if (r >= 0) {
+                    i = ptrs[r] + 1;
+                }
             }
-            ignoreSet.clear(i);
         }
-
         return result;
     }
 
-    private <T> T[] sub(int k, T[] arr, BitSet ignoreSet) {
-        T[] tmp = (T[]) new Object[k];
-        int r = 0;
-        for (int m = 0; m < arr.length; m++) {
-            if (!ignoreSet.get(m)) {
-                tmp[r++] = arr[m];
-            }
+    private <T> T[] subArr(int k, T[] arr, int[] ptrs, Class clazz) {
+        //@SuppressWarnings("unchecked")
+        //T[] tmp = (T[]) new Object[k];
+        T[] tmp = (T[])Array.newInstance(clazz, k);
+        for (int i = 0; i < ptrs.length; i++) {
+            tmp[i] =  arr[ptrs[i]];
         }
         return tmp;
+    }
+
+    private static final String LIST = "23456789TJQKA";
+    
+    private static final Set<String> BLACK_CARDS = expandWildCards("D", "H");
+
+    private static final  Set<String> RED_CARDS = expandWildCards("S", "C");
+
+    private static Set<String> expandWildCards(String re1, String re2) {
+        return Chars.asList(LIST.toCharArray()).stream().
+                map(o -> newHashSet(o + re1, o + re2)).flatMap(Set::stream).collect(toSet());
+    }
+
+    private Set<String> replacement(String card) {
+        if (card.equals("?B")) {
+            return BLACK_CARDS;
+        } else if (card.equals("?R")) {
+            return RED_CARDS;
+        }
+        return newHashSet(card);
+    }
+
+    /**
+     * input a 7-card hand and returns the best 5 card hand.
+     *  Jokers will be treated as 'wild cards' which
+     *  can take any rank or suit of the same color.
+     *  Black Joker'?B', can be used as any spade or club
+     *  Red joker '?R', can any heart or diamond
+     */
+    public String[] bestWildHand(String[] hands) {
+        List<Set<String>> wildCards = Arrays.stream(hands).map(o -> replacement(o)).collect(Collectors.toList());
+         Set<List<String>> product = Sets.cartesianProduct(wildCards);
+         List<String[]> candidates = product.stream().map(o -> bestHand(o.toArray(new String[]{}))).collect(Collectors.toList());
+        String[] best = findHand(candidates);
+        return best;
     }
 
 //    //returns the first rank that the hand has exactly n of. For A hand with 4 sevens this function would return 7.
@@ -200,6 +255,9 @@ public class Poker {
         private final Comparator<List<Integer>> RANK_LIST_COMPARATOR = (o1, o2) -> {
             for (int i = 0; i < o1.size(); i++) {
                 Integer v1 = o1.get(i);
+                if (i >= o2.size()) {
+                    return 1;
+                }
                 Integer v2 = o2.get(i);
                 if (v2 == null) {
                     return 1;
