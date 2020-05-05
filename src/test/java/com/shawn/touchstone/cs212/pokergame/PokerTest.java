@@ -106,13 +106,18 @@ public class PokerTest {
     @Test
     public void bestHandShouldReturnBest5cards(){
         String[] hands = "6C 7C 8C 9C TC 5C JS".split(" ");
-        assertThat(Arrays.asList(poker.bestHand(hands)), containsInAnyOrder("6C 7C 8C 9C TC".split(" ")));
+        assertList(poker.bestHand(hands), "6C 7C 8C 9C TC");
     }
 
     @Test
-    public void testCombination() {
-        Set<String[]> set = poker.combination(sf, 4);
-        Set<String[]> s = new HashSet<String[]>();
+    public void testBestWildHands() {
+        assertList(poker.bestWildHand("6C 7C 8C 9C TC 5C ?R".split(" ")), "7C 8C 9C JC TC");
+        assertList(poker.bestWildHand("TD TC 5H 5C 7C ?R ?B".split(" ")), "7C TC TD TH TS");
+        assertList(poker.bestWildHand("JD TC TH 7C 7D 7S 7H".split(" ")), "7C 7D 7H 7S JD");
+    }
+
+    public void assertList(String[] hand, String expected) {
+        assertThat(Arrays.asList(hand), containsInAnyOrder(expected.split(" ")));
     }
 //    @Test
 //    public void twoPairs() {
