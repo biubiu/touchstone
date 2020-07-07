@@ -34,7 +34,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         return apiLimit;
     }
 
-    public void addLimit(String appId, RuleConfig.ApiLimit apiLimit) {
+    private void addLimit(String appId, RuleConfig.ApiLimit apiLimit) {
         if (StringUtils.isEmpty(appId) || appId == null) {
             return;
         }
@@ -182,6 +182,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         }
         return patternBuilder.toString();
     }
+
     private static class Node {
         private String pathDir;
         private boolean isPattern;
