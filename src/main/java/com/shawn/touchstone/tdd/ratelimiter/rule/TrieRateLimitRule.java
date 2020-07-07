@@ -12,8 +12,8 @@ import static java.util.Collections.emptyList;
 
 public class TrieRateLimitRule implements RateLimitRule {
 
-    private volatile ConcurrentHashMap<String, TrieRateLimitRule> limitRules =
-            new ConcurrentHashMap<>();
+    private volatile ConcurrentHashMap<String, TrieRateLimitRule> limitRules = new ConcurrentHashMap<>();
+
     private Node root;
 
     public TrieRateLimitRule() {
@@ -75,7 +75,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         }
 
         Node p = root;
-        for (String path: pathDirs) {
+        for (String path : pathDirs) {
             ConcurrentHashMap<String, Node> children = p.edges;
 
             String pathDirPattern = path;
@@ -122,7 +122,7 @@ public class TrieRateLimitRule implements RateLimitRule {
                     Node n = entry.getValue();
                     if (n.isPattern) {
                         boolean matched = Pattern.matches(n.pathDir, pathDir);
-                        if (matched){
+                        if (matched) {
                             matchNodes = n;
                         }
                     }
@@ -140,7 +140,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         return current;
     }
 
-    public static List<String> tokenizeUrlPath(String urlPath) {
+    private static List<String> tokenizeUrlPath(String urlPath) {
         if (StringUtils.isBlank(urlPath)) {
             return emptyList();
         }
@@ -150,7 +150,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         }
 
         String[] dirs = urlPath.split("/");
-        List<String> dirlist = new ArrayList<String>();
+        List<String> dirlist = new ArrayList<>(dirs.length);
         for (int i = 0; i < dirs.length; ++i) {
             if ((dirs[i].contains(".") || dirs[i].contains("?") || dirs[i].contains("*"))
                     && (!dirs[i].startsWith("{") || !dirs[i].endsWith("}"))) {
@@ -191,7 +191,8 @@ public class TrieRateLimitRule implements RateLimitRule {
 
         private RuleConfig.ApiLimit apiLimit;
 
-        Node() {}
+        Node() {
+        }
 
         Node(String pathDir) {
             this(pathDir, false);
