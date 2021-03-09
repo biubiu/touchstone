@@ -34,7 +34,7 @@ public class TrieRateLimitRule implements RateLimitRule {
         return apiLimit;
     }
 
-    private void addLimit(String appId, RuleConfig.ApiLimit apiLimit) {
+    public void addLimit(String appId, RuleConfig.ApiLimit apiLimit) {
         if (StringUtils.isEmpty(appId) || appId == null) {
             return;
         }
