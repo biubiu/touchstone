@@ -1,6 +1,10 @@
 buildscript {
+    ext.kotlin_version = '1.4.20'
     repositories {
         mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 
 }
@@ -9,6 +13,7 @@ group = 'com.shawn'
 version = '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'kotlin'
 
 version = '1.0'
 sourceCompatibility = 1.8
@@ -23,12 +28,25 @@ dependencies {
     compile 'com.google.guava:guava:29.0-jre',
             'io.reactivex.rxjava2:rxjava:2.2.5',
             'io.projectreactor:reactor-core:3.0.3.RELEASE',
-            'org.projectlombok:lombok:1.18.4',
+            'org.projectlombok:lombok:1.18.12',
             'org.apache.commons:commons-lang3:3.8.1',
             'com.google.code.gson:gson:2.8.6',
             'com.sun.mail:javax.mail:1.6.2',
             'com.thoughtworks.xstream:xstream:1.4.11',
             'redis.clients:jedis:3.2.0',
             'org.yaml:snakeyaml:1.25'
+            'redis.clients:jedis:3.2.0'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3', 'junit:junit:4.11', 'org.mockito:mockito-core:1.10.19'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

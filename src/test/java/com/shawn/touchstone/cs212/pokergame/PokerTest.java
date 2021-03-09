@@ -111,6 +111,7 @@ public class PokerTest {
 
     @Test
     public void testBestWildHands() {
+
         assertList(poker.bestWildHand("6C 7C 8C 9C TC 5C ?R".split(" ")), "7C 8C 9C JC TC");
         assertList(poker.bestWildHand("TD TC 5H 5C 7C ?R ?B".split(" ")), "7C TC TD TH TS");
         assertList(poker.bestWildHand("JD TC TH 7C 7D 7S 7H".split(" ")), "7C 7D 7H 7S JD");

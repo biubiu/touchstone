@@ -1,5 +1,8 @@
 package com.shawn.touchstone.utj2.ch1;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,7 +23,6 @@ public class ScoreCollectionTest {
         scoreCollection.add(() -> 10);
 
         int mean = scoreCollection.arithmeticMean();
-
         assertThat(mean, is(7));
         assertThat(2.32 * 3 , closeTo(6.96, 0.0005));
     }
@@ -31,5 +33,4 @@ public class ScoreCollectionTest {
         ScoreCollection scoreCollection = new ScoreCollection();
         scoreCollection.add(null);
     }
-
 }
