@@ -1,10 +1,12 @@
 package com.shawn.touchstone.functional;
 
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,12 +18,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import static java.math.BigInteger.ONE;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
@@ -93,7 +98,32 @@ public class Lambda {
     private static <E> Stream<List<E>> suffixes(List<E> list) {
         return IntStream.rangeClosed(0, list.size()).mapToObj(start -> list.subList(start, list.size()));
     }
+
+    private static Stream<BigInteger> primes() {
+        // parallezing is unlikely to increase performance if its' iterate() or intermediate ops limit() is used
+        return Stream.iterate(TWO, BigInteger::nextProbablePrime);
+    }
+
+    private static Stream<BigInteger> mersenne(Stream<BigInteger> nums){
+        return   primes().map(p -> TWO.pow(p.intValueExact()).subtract(ONE))
+                .filter(mersenne -> mersenne.isProbablePrime(50));
+    }
+    private static final BigInteger TWO = BigInteger.valueOf(2);
+
+    private static long pi(long n) {
+        return LongStream.rangeClosed(2, n)
+                .mapToObj(BigInteger::valueOf)
+                .filter(i -> i.isProbablePrime(50))
+                .parallel() // 3 times faster if using parallel
+                .count();
+    }
+
     public static void main(String[] args) {
-        new Lambda().mergeMap();
+        //new Lambda().mergeMap();
+        // mersenne(primes()).limit(20).forEach(System.out::println);
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        System.out.println("count: " + pi(10000000));
+        System.out.println("used: " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        stopwatch.stop();
     }
 }
