@@ -5,7 +5,9 @@ import com.google.common.collect.Lists;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.OptionalInt;
+import java.util.function.IntSupplier;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -18,16 +20,14 @@ public class StreamOpsExp {
     }
 
     public static void main(String[] args) {
-        List<Dish> dishes = Lists.newArrayList(
-            new Dish("d1", false, 100, Dish.Type.FISH),
-            new Dish("d2", false, 77, Dish.Type.OTHER),
-            new Dish("d3", false, 300, Dish.Type.MEAT),
-            new Dish("d4", false, 20, Dish.Type.OTHER),
-            new Dish("d5", false, 120, Dish.Type.FISH));
+        List<Dish> dishes = Dish.gen();
 
 //        highest(dishes, 3).map(Dish::getName).forEach(System.out::println);
 //        slicingStreams(dishes);
-        flattenStreams();
+//        flattenStreams();
+        //reduceStreams(dishes);
+        //pythagoreanNum();
+        fib();
     }
 
     private static void slicingStreams(List<Dish> dishes) {
@@ -53,34 +53,67 @@ public class StreamOpsExp {
                 .forEach(p -> System.out.println(p[0] + " " + p[1]));
     }
 
-    public static class Dish {
-        private final String name;
-        private final boolean vegetarian;
-        private final int calories;
-        private final Type type;
-        public Dish(String name, boolean vegetarian, int calories, Type type) {
-            this.name = name;
-            this.vegetarian = vegetarian;
-            this.calories = calories;
-            this.type = type;
-        }
-        public String getName() {
-            return name;
-        }
-        public boolean isVegetarian() {
-            return vegetarian;
-        }
-        public int getCalories() {
-            return calories;
-        }
-        public Type getType() {
-            return type;
-        }
+    public static void reduceStreams(List<Dish> dishes) {
+
+        int sum1 = IntStream.rangeClosed(0, 100).reduce(0, (a, b) -> a + b);
+        int sum2 = IntStream.rangeClosed(0, 100).reduce(0, Integer::sum);
+        int sum3 = IntStream.rangeClosed(0, 100).sum();
+        OptionalInt sum4 = IntStream.rangeClosed(0, 100).reduce(Integer::sum);
+        int products = IntStream.rangeClosed(1, 10)
+                .reduce(1, (a, b) -> a * b);
+        System.out.println(sum1);
+        System.out.println(sum2);
+        System.out.println(sum3);
+        System.out.println(sum4);
+        System.out.println(products);
+
+        OptionalInt max = IntStream.rangeClosed(0, 100)
+                            .reduce(Math::max);
+                            //.reduce((a, b) -> a > b ? a : b);
+        System.out.println(max);
+
+        int count = (int) dishes.stream()
+                            //.map(d -> 1).reduce(0, (a, b) -> a + b);
+                            .count();
+        System.out.println("dishes = " + count);
+    }
+
+    private static IntSupplier intSupplier = new IntSupplier() {
+        private int prev = 0;
+        private int curr = 1;
         @Override
-        public String toString() {
-            return name;
+        public int getAsInt() {
+            int old = this.prev;
+            int next = this.prev + this.curr;
+            this.prev = this.curr;
+            this.curr = next;
+            return old;
         }
-        public enum Type { MEAT, FISH, OTHER }
+    };
+
+    private static void fib() {
+        Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(20)
+                .forEach(t -> System.out.println("(" + t[0] + "," + t[1] +")"));
+        System.out.println("-------------------------------------");
+        Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(20)
+                .map(n -> n[0])
+                .forEach(System.out::println);
+        System.out.println("-------------------------------------");
+        IntStream.generate(intSupplier).limit(20).forEach(System.out::println);
+    }
+
+    private static void pythagoreanNum() {
+        IntStream.rangeClosed(1, 100).boxed().flatMap(a ->
+                IntStream.rangeClosed(1, 100).filter(b -> Math.sqrt(a * a + b * b) % 1 == 0)
+                        .mapToObj(b ->new int[]{a, b, (int)Math.sqrt(a * a + b * b)}))
+                .limit(6).forEach(t -> System.out.println(t[0] + " " + t[1] + " " + t[2]));
+
+        IntStream.rangeClosed(1, 100).boxed().flatMap(a ->
+                IntStream.rangeClosed(a, 100)
+                        .mapToObj(b ->new double[]{a, b, Math.sqrt(a * a + b * b)})).filter(t -> t[2] % 1 == 0)
+                .limit(6).forEach(t -> System.out.println(t[0] + " " + t[1] + " " + t[2]));
     }
 
 }
