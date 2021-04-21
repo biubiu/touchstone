@@ -42,7 +42,7 @@ public class StreamOpsExp {
                 .flatMap(Arrays::stream)
                 .distinct()
                 .collect(toList());
-        System.out.println(chs.toString());
+        System.out.println(chs);
 
         List<Integer> nums1 = Lists.newArrayList(1, 2, 3);
         List<Integer> nums2 = Lists.newArrayList(3, 4);

@@ -1,13 +1,14 @@
 package com.shawn.touchstone.functional;
 
-import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
@@ -16,39 +17,46 @@ import static java.util.stream.Collectors.flatMapping;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.maxBy;
+import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.reducing;
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 public class CollectingOpsExp {
 
     public static void main(String[] args) {
-        List<Dish> dishes = Dish.gen();
-        System.out.println(statistics(dishes));
-        String shortMenu = dishes.stream().map(Dish::getName).collect(Collectors.joining(","));
-        System.out.println(shortMenu);
-        //group(dishes);
-        //multiLevelGroup(dishes);
-        collectInSubgroups(dishes);
+        List<Dish> menu = Dish.gen();
+//        statistics(menu);
+//        String shortMenu = menu.stream().map(Dish::getName).collect(Collectors.joining(","));
+//        System.out.println(shortMenu);
+//        group(menu);
+        multiLevelGroup(menu);
+//        collectInSubgroups(menu);
+//        partitioningExp(menu);
     }
 
     private static void group(List<Dish> menu) {
         Map<Dish.Type, List<Dish>> grouping = menu.stream().collect(groupingBy(Dish::getType));
         System.out.println(grouping);
+
+        Map<Dish.Type, List<Dish>> de = menu.stream().filter(d -> d.getCalories() > 500).collect(groupingBy(Dish::getType));
+        System.out.println("grouping = " + de);
         Map<Dish.Type, List<Dish>> caloricDishesByType =
                 menu.stream()
                         .collect(groupingBy(Dish::getType,
                                 filtering(dish -> dish.getCalories() > 500, toList())));
         System.out.println(caloricDishesByType);
+
         Map<Dish.Type, List<String>> dishNameByType = menu.stream()
                             .collect(groupingBy(Dish::getType, mapping(Dish::getName, toList())));
         System.out.println(dishNameByType);
+
         Map<String, List<String>> tags = Dish.tags();
         Map<Dish.Type, Set<String>> dishNamesByType =
-                menu.stream()
-                        .collect(groupingBy(Dish::getType,
-                                flatMapping(dish -> tags.get( dish.getName() ).stream(),
-                                        toSet())));
+               menu.stream().collect(groupingBy(Dish::getType,
+                       flatMapping(d -> tags.get(d.getName()).stream(),
+                               toSet())));
         System.out.println(dishNamesByType);
     }
 
@@ -62,6 +70,10 @@ public class CollectingOpsExp {
                         })));
         System.out.println("dishesByTypeCaloricLevel = " + dishesByTypeCaloricLevel);
 
+        Map<Dish.Type, Map<Dish.CaloricLevel, List<Dish>>> dishesByCaloricLevel = 
+                menu.stream().collect(groupingBy(Dish::getType, groupingBy(Dish::getCaloricLevel)));
+        System.out.println("dishesByCaloricLevel = " + dishesByCaloricLevel);
+
         Map<Dish.Type, Dish> mostCaloricByType = menu.stream().collect(groupingBy(Dish::getType,
                 collectingAndThen(maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
         System.out.println("mostCaloricByType = " + mostCaloricByType);
@@ -70,10 +82,48 @@ public class CollectingOpsExp {
     private static void collectInSubgroups(List<Dish> menu) {
         Map<Dish.Type, Long> typesCount = menu.stream().collect(groupingBy(Dish::getType, counting()));
         System.out.println("typesCount = " + typesCount);
+
+        Map<Dish.Type, Optional<Dish>> mostCaloricByOptionalType = menu.stream().collect(groupingBy(Dish::getType,
+                maxBy(Comparator.comparingInt(Dish::getCalories))));
+        System.out.println("mostCaloricByOptionalType = " + mostCaloricByOptionalType);
+        Map<Dish.Type, Dish> mostCaloricByType = menu.stream().collect(groupingBy(Dish::getType,
+                collectingAndThen(maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
+        System.out.println("mostCaloricByType = " + mostCaloricByType);
+
+        Map<Dish.Type, Set<Dish.CaloricLevel>> caloricLevelsByType = menu.stream().collect(groupingBy(Dish::getType,
+                mapping(d -> {
+                    if (d.getCalories() <= 400) return Dish.CaloricLevel.DIET;
+                    else if (d.getCalories() <= 700) return Dish.CaloricLevel.NORMAL;
+                    else return Dish.CaloricLevel.FAT;
+                //}, toSet())));
+                }, toCollection(HashSet::new))));
+        System.out.println("caloricLevelsByType = " + caloricLevelsByType);
     }
-    private static IntSummaryStatistics statistics(List<Dish> menu) {
+
+    private static void partitioningExp(List<Dish> menu) {
+        Map<Boolean, List<Dish>> partitionedMenu = menu.stream().collect(partitioningBy(Dish::isVegetarian));
+        System.out.println("partitionedMenu = " + partitionedMenu);
+
+        Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType = menu.stream()
+                .collect(partitioningBy(Dish::isVegetarian, groupingBy(Dish::getType)));
+        System.out.println("vegetarianDishesByType = " + vegetarianDishesByType);
+        Map<Boolean, List<Integer>> primes = partitionPrimes(100);
+        System.out.println("primes = " + primes);
+    }
+
+    private static void statistics(List<Dish> menu) {
         //return menu.stream().collect(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)));
-        return menu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
+        IntSummaryStatistics statistics = menu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
+        System.out.println("statistics = " + statistics);
+    }
+
+    public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
+        return IntStream.rangeClosed(2, n).boxed().collect(
+                partitioningBy(candidate -> isPrime(candidate)));
+    }
+
+    private static boolean isPrime(int candidate) {
+        return IntStream.range(2, candidate).noneMatch(i -> candidate % 2 == 0);
     }
 
     private static long simpleCount(List<Dish> menu) {
@@ -88,4 +138,5 @@ public class CollectingOpsExp {
     private static Optional<Dish> highest(List<Dish> menu) {
         return menu.stream().collect(reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
     }
+
 }

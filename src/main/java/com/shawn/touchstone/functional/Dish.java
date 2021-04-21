@@ -37,12 +37,17 @@ public class Dish {
         return type;
     }
 
+    public CaloricLevel getCaloricLevel() {
+        if (this.getCalories() <= 400) return Dish.CaloricLevel.DIET;
+        else if (this.getCalories() <= 600) return Dish.CaloricLevel.NORMAL;
+        else return Dish.CaloricLevel.FAT;
+    }
     @Override
     public String toString() {
         return name;
     }
 
-    public enum Type {MEAT, FISH, OTHER}
+    public enum Type {MEAT, FISH, OTHER, VEG}
     public enum CaloricLevel{FAT, NORMAL, DIET}
 
     public static List<Dish> gen() {
