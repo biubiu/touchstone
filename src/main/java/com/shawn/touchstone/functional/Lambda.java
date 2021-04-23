@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,7 +19,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.Function;
+import java.util.function.DoubleUnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -34,13 +33,14 @@ import static java.util.stream.Collectors.toMap;
 public class Lambda {
 
     enum Operation {
-        PLUS ("+", (a, b) -> a + b),
+        PLUS("+", (a, b) -> a + b),
         MINUS("-", (a, b) -> a - b);
 
         private final String operation;
         private final DoubleBinaryOperator op;
         private static final Map<String, Operation> stringToEnum =
                 Stream.of(values()).collect(toMap(Object::toString, e -> e));
+
         Operation(String operation, DoubleBinaryOperator op) {
             this.operation = operation;
             this.op = op;
@@ -53,11 +53,11 @@ public class Lambda {
 
     public void freqMapping(File file) {
         Map<String, Long> freq = new HashMap<>();
-        try(Stream<String> words = new Scanner(file).delimiter().splitAsStream("")) {
+        try (Stream<String> words = new Scanner(file).delimiter().splitAsStream("")) {
 //            words.forEach(word -> {
 //                freq.merge(word.toLowerCase(), 1L, Long::sum);
 //            });
-        freq = words.collect(groupingBy(String::toLowerCase, counting()));
+            freq = words.collect(groupingBy(String::toLowerCase, counting()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -104,10 +104,11 @@ public class Lambda {
         return Stream.iterate(TWO, BigInteger::nextProbablePrime);
     }
 
-    private static Stream<BigInteger> mersenne(Stream<BigInteger> nums){
-        return   primes().map(p -> TWO.pow(p.intValueExact()).subtract(ONE))
+    private static Stream<BigInteger> mersenne(Stream<BigInteger> nums) {
+        return primes().map(p -> TWO.pow(p.intValueExact()).subtract(ONE))
                 .filter(mersenne -> mersenne.isProbablePrime(50));
     }
+
     private static final BigInteger TWO = BigInteger.valueOf(2);
 
     private static long pi(long n) {
@@ -118,12 +119,21 @@ public class Lambda {
                 .count();
     }
 
+    public static DoubleUnaryOperator curriedOperator(double f, double b) {
+        return (double x) -> x * f + b;
+    }
+
     public static void main(String[] args) {
         //new Lambda().mergeMap();
         // mersenne(primes()).limit(20).forEach(System.out::println);
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        System.out.println("count: " + pi(10000000));
-        System.out.println("used: " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        stopwatch.stop();
+//        Stopwatch stopwatch = Stopwatch.createStarted();
+//        System.out.println("count: " + pi(10000000));
+//        System.out.println("used: " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+//        stopwatch.stop();
+
+        DoubleUnaryOperator convertCToF = curriedOperator(9.0/5, 32);
+        DoubleUnaryOperator covertKmToMi = curriedOperator(0.6214, 0);
+        double fTemp = convertCToF.applyAsDouble(44.0);
+        System.out.println("convertCToF = " + fTemp);
     }
 }
