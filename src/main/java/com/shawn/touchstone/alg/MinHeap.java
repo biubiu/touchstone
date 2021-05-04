@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MinHeap {
 
-    List<Integer> heap = new ArrayList<Integer>();
+    List<Integer> heap;
 
     public MinHeap(List<Integer> array) {
         heap = buildHeap(new ArrayList<>(array));
@@ -22,19 +22,18 @@ public class MinHeap {
     public void siftDown(int currentIdx, int endIdx, List<Integer> heap) {
         int childOneIdx = currentIdx * 2 + 1;
         while (childOneIdx <= endIdx) {
-            int childTwoIdx = currentIdx * 2 + 2 <= endIdx ? currentIdx * 2 + 2 : -1;
-            int idxSwap;
+            int childTwoIdx = currentIdx * 2 + 2;
+            childTwoIdx = childTwoIdx <= endIdx ? childTwoIdx : -1;
+            int idxToSwap = childOneIdx;
             if (childTwoIdx != -1 && heap.get(childTwoIdx) < heap.get(childOneIdx)) {
-                idxSwap = childTwoIdx;
-            } else {
-                idxSwap = childOneIdx;
+                idxToSwap = childTwoIdx;
             }
-            if (heap.get(idxSwap) < heap.get(currentIdx)) {
-                swap(currentIdx, idxSwap, heap);
-                currentIdx = idxSwap;
+            if (heap.get(idxToSwap) < heap.get(currentIdx)) {
+                swap(idxToSwap, currentIdx, heap);
+                currentIdx = idxToSwap;
                 childOneIdx = currentIdx * 2 + 1;
-            }  else {
-                return;
+            } else {
+                break;
             }
         }
     }
