@@ -9,12 +9,12 @@ import com.google.common.primitives.Chars;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -23,6 +23,7 @@ import static com.google.common.collect.ImmutableList.of;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Collections.emptySet;
+import static java.util.Collections.list;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toCollection;
@@ -125,13 +126,13 @@ public class Poker {
     }
 
     public String[] bestHand(String[] hands) {
-        Set<String[]> combination = this.combinnation(hands, 5, String.class);
+        Set<String[]> combination = this.combination(hands, 5, String.class);
 
         //List<String[]> rawhands = combination.stream().map(o -> (new String[]) o).collect(toList());
         return this.findHand(Lists.newArrayList(combination));
     }
 
-    public <T> Set<T[]> combinnation(T[] arr, int k, Class clazz) {
+    public <T> Set<T[]> combination(T[] arr, int k, Class clazz) {
         int len = arr.length;
         if (k > len) {
             throw new IllegalArgumentException("k exceeds arr len");
@@ -269,5 +270,36 @@ public class Poker {
             }
             return 0;
         };
+    }
+
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    };
+
+    class CountAllPathSum {
+        public static int countPaths(TreeNode root, int sum) {
+            return count(root, new LinkedList<>(), sum);
+        }
+
+        private static int count(TreeNode node, List<Integer> curr, int sum) {
+            if (node == null) return 0;
+            curr.add(node.val);
+            int pathCount = 0, pathSum = 0;
+            ListIterator<Integer> listIterator = curr.listIterator();
+            while (listIterator.hasPrevious()) {
+                pathSum += listIterator.previous();
+                if (pathSum == sum) pathSum++;
+            }
+            pathCount += count(node.left, curr, sum);
+            pathCount += count(node.right, curr, sum);
+            curr.remove(curr.size() - 1);
+            return pathCount;
+        }
     }
 }

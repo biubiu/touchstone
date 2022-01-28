@@ -1,6 +1,5 @@
 package com.shawn.touchstone.functional.patterns;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -21,12 +20,14 @@ public class TemplateExp {
 
     abstract class OnlineBanking {
 
-        public void processCustomer(int id){
+        public void processCustomer(int id) {
             Customer c = customers.get(id);
             makeCustomerHappy(c);
         }
+
         abstract void makeCustomerHappy(Customer c);
     }
+
     //with traditional template pattern
     public void processCustomer(int id) {
         new OnlineBanking() {
@@ -42,7 +43,7 @@ public class TemplateExp {
         //do something;
     };
 
-     public void processCustomer(int id, Consumer<Customer> makeCustomerHappy) {
+    public void processCustomer(int id, Consumer<Customer> makeCustomerHappy) {
         makeCustomerHappy.accept(customers.get(id));
     }
 }

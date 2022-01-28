@@ -1,5 +1,7 @@
 package com.shawn.touchstone.alg;
 
+import sun.misc.Unsafe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,4 +71,5 @@ public class MinHeap {
         heap.add(value);
         siftUp(heap.size() - 1, heap);
     }
+
 }

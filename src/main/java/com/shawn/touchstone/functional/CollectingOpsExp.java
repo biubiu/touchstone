@@ -1,11 +1,13 @@
 package com.shawn.touchstone.functional;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -123,6 +125,8 @@ public class CollectingOpsExp {
     }
 
     private static boolean isPrime(int candidate) {
+        int[] nums = new int[]{};
+        IntStream.range(2, 2 + 3).mapToObj(n -> nums[n]).collect(toList());
         return IntStream.range(2, candidate).noneMatch(i -> candidate % 2 == 0);
     }
 
@@ -139,4 +143,18 @@ public class CollectingOpsExp {
         return menu.stream().collect(reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
     }
 
+    public int findLeastNumOfUniqueInts(int[] arr, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num: arr) freq.put(num, freq.getOrDefault(num, 0) + 1);
+        PriorityQueue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
+        for (Map.Entry<Integer, Integer> en: freq.entrySet()) minHeap.offer(en);
+        for (int i = 0; i < k; i++) {
+            Map.Entry<Integer, Integer> curr = minHeap.poll();
+            if (curr.getValue() - 1 > 0) {
+                curr.setValue(curr.getValue() - 1);
+                minHeap.offer(curr);
+            }
+        }
+        return minHeap.size();
+    }
 }
