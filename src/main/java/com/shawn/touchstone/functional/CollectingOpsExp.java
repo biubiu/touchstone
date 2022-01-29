@@ -1,5 +1,7 @@
 package com.shawn.touchstone.functional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,7 +30,10 @@ import static java.util.stream.Collectors.toSet;
 public class CollectingOpsExp {
 
     public static void main(String[] args) {
+        Arrays.stream(new String[]{}).collect(groupingBy(x -> x, counting()));
         List<Dish> menu = Dish.gen();
+        List<int[]> result = new ArrayList<>();
+        result.toArray(new int[0][0]);
 //        statistics(menu);
 //        String shortMenu = menu.stream().map(Dish::getName).collect(Collectors.joining(","));
 //        System.out.println(shortMenu);
