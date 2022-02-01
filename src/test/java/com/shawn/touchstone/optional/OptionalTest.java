@@ -2,8 +2,12 @@ package com.shawn.touchstone.optional;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 /**
@@ -44,5 +48,22 @@ public class OptionalTest {
                                 .flatMap(o -> o.getUsb())
                                 .map(Computer.USB::getVersion)
                                 .orElse("UNKNOWN");
+    }
+
+
+    @Test
+    public void testRemove() {
+        assertThat(remove(new int[]{2,3,3,3,6,9,9}), is(4));
+    }
+    private int remove(int[] arr) {
+        int nextNonDup = 1;
+         
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[nextNonDup - 1] != arr[i]) {
+                arr[nextNonDup] = arr[i];
+                nextNonDup++;
+            }
+        }
+        return nextNonDup;
     }
 }
