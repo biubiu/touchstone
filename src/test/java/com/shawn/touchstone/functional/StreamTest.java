@@ -49,12 +49,7 @@ public class StreamTest {
   @Test
   public void testIteratingList(){
     final List<String> friends = Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
-    friends.stream().forEach(new Consumer<String>() {
-      @Override
-      public void accept(String s) {
-        System.out.println(s);
-      }
-    });
+    friends.stream().forEach(s -> System.out.println(s));
 
     friends.stream().forEach((final String name) -> System.out.println(name));
     friends.stream().forEach(name -> System.out.println(name));

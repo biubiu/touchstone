@@ -13,12 +13,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collector.Characteristics.CONCURRENT;
 import static java.util.stream.Collector.Characteristics.IDENTITY_FINISH;
 import static java.util.stream.Collectors.partitioningBy;
-import static java.util.stream.Collectors.toList;
 
 public class CustomCollectorExp {
     public static void main(String[] args) {
@@ -43,7 +41,7 @@ public class CustomCollectorExp {
         return list;
     }
 
-    private class PrimeNumCollecotr implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
+    private class PrimeNumCollector implements Collector<Integer, Map<Boolean, List<Integer>>, Map<Boolean, List<Integer>>> {
 
         @Override
         public Supplier<Map<Boolean, List<Integer>>> supplier() {

@@ -2,11 +2,8 @@ package com.shawn.touchstone.tdd.familytree;
 
 import com.google.common.base.Preconditions;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
