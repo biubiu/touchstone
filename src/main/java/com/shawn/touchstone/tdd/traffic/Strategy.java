@@ -49,7 +49,7 @@ public class Strategy {
 
     }
 
-    enum Vehicle {
+    public enum Vehicle {
         BIKE(10, 2),
         TUKTUK(12, 1),
         CAR(20, 3);
@@ -57,7 +57,7 @@ public class Strategy {
         private final int speed;
         private final int speedForCraters;
 
-        private Vehicle(int speed, int speedForCraters) {
+        Vehicle(int speed, int speedForCraters) {
             this.speed = speed;
             this.speedForCraters = speedForCraters;
         }

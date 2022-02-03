@@ -24,10 +24,10 @@ public class BallotSystem {
 
     public void receive(Ticket ticket) {
         Objects.requireNonNull(ticket);
-        if (ticket.getSender() == ticket.getRecipient()) {
+        if (ticket.sender() == ticket.recipient()) {
             return;
         }
-        votes.add(ticket.getRecipient());
+        votes.add(ticket.recipient());
     }
 
     public List<Kingdom> getVotes() {

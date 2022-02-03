@@ -2,6 +2,7 @@ package com.shawn.touchstone.tdd.tameofthrone;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Strategy {
@@ -10,7 +11,7 @@ public class Strategy {
         if (msg == null || msg.isEmpty() || kingdom == null) {
             return false;
         }
-        Map<Character, Long> occurrences = groupbyOccurrences(msg);
+        Map<Character, Long> occurrences = groupByOccurrences(msg);
         return include(occurrences, kingdom.emblemCharOccurrences());
     }
 
@@ -23,9 +24,9 @@ public class Strategy {
         return true;
     }
 
-    private Map<Character, Long> groupbyOccurrences(String str) {
+    private Map<Character, Long> groupByOccurrences(String str) {
         return str.trim().toLowerCase().chars().mapToObj(o -> (char)o)
-                .collect(Collectors.groupingBy(c -> (Character) c, LinkedHashMap::new, Collectors.counting()));
+                .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
     }
 
 }

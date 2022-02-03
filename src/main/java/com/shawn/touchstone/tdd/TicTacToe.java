@@ -8,11 +8,7 @@ public class TicTacToe {
 
     private char lastPlayer = 'X';
 
-    private char[][] board = new char[][]{
-            {EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY},
-    };
+    private char[][] board = new char[][]{{EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY},};
 
     public String play(int x, int y) {
         checkBound(x);
@@ -52,15 +48,12 @@ public class TicTacToe {
     }
 
     private boolean isDiagonalLine() {
-        return (board[0][0] == lastPlayer && board[1][1] == lastPlayer && board[2][2] == lastPlayer) ||
-                (board[2][0] == lastPlayer && board[1][1] == lastPlayer && board[0][2] == lastPlayer);
+        return (board[0][0] == lastPlayer && board[1][1] == lastPlayer && board[2][2] == lastPlayer) || (board[2][0] == lastPlayer && board[1][1] == lastPlayer && board[0][2] == lastPlayer);
     }
 
     private boolean isVertical() {
         for (int i = 0; i < board.length; i++) {
-            if (board[i][0] == lastPlayer &&
-                    board[i][1] == lastPlayer &&
-                    board[i][2] == lastPlayer) {
+            if (board[i][0] == lastPlayer && board[i][1] == lastPlayer && board[i][2] == lastPlayer) {
                 return true;
             }
         }
@@ -69,9 +62,7 @@ public class TicTacToe {
 
     private boolean isHorizontal() {
         for (int i = 0; i < board.length; i++) {
-            if (board[0][i] == lastPlayer &&
-            board[1][i] == lastPlayer &&
-            board[2][i] == lastPlayer) {
+            if (board[0][i] == lastPlayer && board[1][i] == lastPlayer && board[2][i] == lastPlayer) {
                 return true;
             }
         }

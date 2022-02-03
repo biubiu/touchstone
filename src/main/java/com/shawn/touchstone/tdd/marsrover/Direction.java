@@ -13,7 +13,8 @@ public enum Direction {
 
     private static ImmutableMap<Character, Direction> map = ImmutableMap.of('N', Direction.NORTH,
             'E', Direction.EAST, 'W', Direction.WEST, 'S', Direction.SOUTH);
-    private Direction(char direction) {
+
+    Direction(char direction) {
         this.direction = direction;
     }
 
