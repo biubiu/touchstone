@@ -2,9 +2,6 @@ package com.shawn.touchstone.optional;
 
 import java.util.Optional;
 
-/**
- * @author shangfei
- */
 public class Computer {
 
     private Optional<Soundcard> soundcard;
