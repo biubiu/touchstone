@@ -7,13 +7,13 @@ public class LRUCache {
 
   private int maxSize;
   private int currSize;
-  private DoublyLinkedList mostRecentVisted;
+  private DoublyLinkedList mostRecentVisited;
   private Map<String, Node> cache;
 
   public LRUCache(int size) {
     this.maxSize = size > 1 ? size : 1;
     this.currSize = 0;
-    this.mostRecentVisted = new DoublyLinkedList();
+    this.mostRecentVisited = new DoublyLinkedList();
     this.cache = new HashMap<>();
   }
 
@@ -36,13 +36,13 @@ public class LRUCache {
   }
 
   private void removeLeastRecent() {
-    String toRemove = mostRecentVisted.tail.key;
-    mostRecentVisted.removeTail();
+    String toRemove = mostRecentVisited.tail.key;
+    mostRecentVisited.removeTail();
     cache.remove(toRemove);
   }
 
   private void updateMostRecent(Node node) {
-    mostRecentVisted.setHeadTo(node);
+    mostRecentVisited.setHeadTo(node);
   }
 
   public Integer get(String key) {
@@ -56,8 +56,8 @@ public class LRUCache {
   }
 
   public String getMostRecentKey() {
-    if (mostRecentVisted.head != null) {
-      return mostRecentVisted.head.key;
+    if (mostRecentVisited.head != null) {
+      return mostRecentVisited.head.key;
     } else {
       return null;
     }

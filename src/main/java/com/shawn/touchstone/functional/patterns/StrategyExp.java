@@ -2,8 +2,20 @@ package com.shawn.touchstone.functional.patterns;
 
 public class StrategyExp {
 
-     static class IsNumeric implements ValidationStrategy {
-        public boolean execute(String s){
+    public static void main(String[] args) {
+        Validator validator = new Validator(new IsNumeric());
+        validator.validate("abc");
+
+        Validator validator1 = new Validator(str -> str.matches("[a-z]+"));
+        validator1.validate("abc");
+    }
+
+    interface ValidationStrategy {
+        boolean execute(String s);
+    }
+
+    static class IsNumeric implements ValidationStrategy {
+        public boolean execute(String s) {
             return s.matches("\\d+");
         }
     }
@@ -13,9 +25,6 @@ public class StrategyExp {
         public boolean execute(String s) {
             return s.matches("[a-z]+");
         }
-    }
-    interface ValidationStrategy {
-        boolean execute(String s);
     }
 
     static class Validator {
@@ -28,13 +37,5 @@ public class StrategyExp {
         public boolean validate(String s) {
             return validationStrategy.execute(s);
         }
-    }
-
-    public static void main(String[] args) {
-        Validator validator = new Validator(new IsNumeric());
-        validator.validate("abc");
-
-        Validator validator1 = new Validator(str -> str.matches("[a-z]+"));
-        validator1.validate("abc");
     }
 }

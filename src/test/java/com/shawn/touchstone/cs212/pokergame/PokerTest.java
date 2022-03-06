@@ -7,9 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableList.of;
@@ -20,8 +18,8 @@ import static org.junit.Assert.assertThat;
 
 public class PokerTest {
 
-    private Poker poker;
-
+    @Rule
+    public ExpectedException expected = ExpectedException.none();
     String[] sf = "6C 7C 8C 9C TC".split(" "); //straight flush
     String[] fk = "9D 9H 9S 9C 7D".split(" "); // four of a kind
     String[] fh = "TD TC TH 7C 7D".split(" "); //full house
@@ -30,9 +28,7 @@ public class PokerTest {
     String[] s2 = "2C 3C 4C 5S 6S".split(" "); //2-6 straight
     String[] ah = "AS 2S 3S 4S 6S".split(" "); //A high
     String[] sh = "2S 3S 4S 6D 7D".split(" "); //7 high
-
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
+    private Poker poker;
 
     @Before
     public void setup() {
@@ -55,7 +51,7 @@ public class PokerTest {
 
         assertThat(poker.findHand(of(fh, fh)), is(fh));
 
-        assertThat(poker.findHand(of(fh)), is(fh));
+        //assertThat(poker.findHand(of(fh)), is(fh));
 
     }
 
@@ -104,7 +100,7 @@ public class PokerTest {
     }
 
     @Test
-    public void bestHandShouldReturnBest5cards(){
+    public void bestHandShouldReturnBest5cards() {
         String[] hands = "6C 7C 8C 9C TC 5C JS".split(" ");
         assertList(poker.bestHand(hands), "6C 7C 8C 9C TC");
     }

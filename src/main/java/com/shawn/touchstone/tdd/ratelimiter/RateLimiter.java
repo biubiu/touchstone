@@ -13,7 +13,7 @@ public class RateLimiter {
 
     private RateLimitRule rule;
 
-    private ConcurrentHashMap<String, RateLimitAlgo> counters = new ConcurrentHashMap<String, RateLimitAlgo>();
+    private ConcurrentHashMap<String, RateLimitAlgo> counters = new ConcurrentHashMap<>();
 
     private FileRuleConfigSource fileRuleConfigSource;
 
@@ -30,6 +30,8 @@ public class RateLimiter {
 
     public boolean limit(String appId, String url) {
         Objects.requireNonNull(rule);
+        Objects.requireNonNull(appId);
+        Objects.requireNonNull(url);
         RuleConfig.ApiLimit limit = rule.getLimit(appId, url);
         if (limit == null) {
             return false;

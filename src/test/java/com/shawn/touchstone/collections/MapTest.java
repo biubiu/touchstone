@@ -22,7 +22,7 @@ public class MapTest {
 
     @Test
     public void testLinkedHashMapAsLRU() {
-        Map<Integer, Integer> lru = new LinkedHashMap(10, 0.75f, true);
+        LinkedHashMap<Integer, Integer> lru = new LinkedHashMap(10, 0.75f, true);
         lru.putIfAbsent(1, 1);
         lru.putIfAbsent(2, 2);
         lru.putIfAbsent(3, 3);
@@ -31,11 +31,13 @@ public class MapTest {
         lru.entrySet().forEach(System.out::println);
         System.out.println();
         lru.put(3, 44);
+        lru.get(2);
+
         lru.entrySet().forEach(System.out::println);
     }
 
     @Test
-    public void testNavigatableMap() {
+    public void testNavigableMap() {
         NavigableMap<Integer, Long> map = new ConcurrentSkipListMap(Comparator.naturalOrder());
 
         map.put(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));

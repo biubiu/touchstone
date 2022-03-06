@@ -7,10 +7,13 @@ import org.junit.Test;
 import java.util.List;
 
 import static com.google.common.collect.ImmutableList.of;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 public class RateLimiterSpec {
 

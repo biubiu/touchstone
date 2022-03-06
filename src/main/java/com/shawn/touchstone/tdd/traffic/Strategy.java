@@ -34,7 +34,7 @@ public class Strategy {
         SUNNY(List.of(CAR, BIKE, TUKTUK), crater -> crater * 0.9),
         RAINY(List.of(CAR, TUKTUK), crater -> crater * 1.2),
         WINDY(List.of(CAR, BIKE), crater -> crater);
-
+        
         private final UnaryOperator<Double> craterOpt;
         private final List<Vehicle> vehicles;
 
