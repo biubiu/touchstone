@@ -35,5 +35,4 @@ public class EmployeeFreeTime {
 }
 
 
-record Interval(int start, int end){}
 record EmployeeTime(Interval interval, int employeeIdx, int intervalIdx) {}
