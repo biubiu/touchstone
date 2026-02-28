@@ -1,9 +1,9 @@
 package com.shawn.touchstone.di;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class Reflection {
 

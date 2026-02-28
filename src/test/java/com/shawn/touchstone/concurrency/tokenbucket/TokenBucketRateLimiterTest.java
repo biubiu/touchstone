@@ -1,15 +1,15 @@
 package com.shawn.touchstone.concurrency.tokenbucket;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TokenBucketRateLimiterTest {
 
     FakeTimeWrapper timeWrapper;
-    @Before
+    @BeforeEach
     public void create() {
         timeWrapper = new FakeTimeWrapper(0L);
     }

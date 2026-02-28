@@ -1,7 +1,7 @@
 package com.shawn.touchstone.tdd.familytree;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -16,14 +16,14 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FamilyTreeTest {
 
     Node sue;
     Node adam;
     FamilyTree familyTree;
-    @Before
+    @BeforeEach
     public void setupTree() {
         sue = new Node("Sue", FEMALE);
         adam = new Node("Adam", MALE);

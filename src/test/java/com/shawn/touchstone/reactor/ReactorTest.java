@@ -3,10 +3,11 @@ package com.shawn.touchstone.reactor;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.System.out;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import reactor.core.publisher.Flux;
@@ -52,8 +53,8 @@ public class ReactorTest {
   }
 
   @Test
-  public void shortCircuit() throws InterruptedException {
-    Flux<String> helloPausedWord = Mono.just("Hello").concatWith(Mono.just("world").delaySubscriptionMillis(500));
+  public void shortCircuit() {
+    Flux<String> helloPausedWord = Mono.just("Hello").concatWith(Mono.just("world").delaySubscription(Duration.ofMillis(500)));
     //helloPausedWord.subscribe(out::println);
     //Thread.sleep(510);
     helloPausedWord.toStream().forEach(out::println);
@@ -61,9 +62,9 @@ public class ReactorTest {
 
   @Test
   public void testFirstEmitting() {
-    Mono<String> a = Mono.just("oops I'm late ").delaySubscriptionMillis(450);
-    Flux<String> b = Flux.just("let's get", "the party", "started").delaySubscriptionMillis(400);
-    Flux.firstEmitting(a, b).toIterable().forEach(out::println);
+    Mono<String> a = Mono.just("oops I'm late ").delaySubscription(Duration.ofMillis(450));
+    Flux<String> b = Flux.just("let's get", "the party", "started").delaySubscription(Duration.ofMillis(400));
+    Flux.firstWithSignal(a, b).toIterable().forEach(out::println);
 
   }
 

@@ -1,6 +1,6 @@
 package com.shawn.touchstone.functional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StringsFiltersTest {
 

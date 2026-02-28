@@ -4,7 +4,7 @@ import com.shawn.touchstone.objects.builder.Calzone;
 import com.shawn.touchstone.objects.builder.NyPizza;
 import com.shawn.touchstone.objects.builder.NyPizza.Size;
 import com.shawn.touchstone.objects.builder.Pizza.Topping;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BuilderTest {
 

@@ -4,14 +4,14 @@ import com.google.common.base.Stopwatch;
 import com.google.common.base.Ticker;
 import com.google.common.testing.FakeTicker;
 import com.google.common.util.concurrent.FakeTimeLimiter;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -71,7 +71,7 @@ public class FixedWindowRateLimiterSpec {
 
 //    private Stopwatch stopwatch;
 //
-//    @Before
+//    @BeforeEach
 //    public void setup() {
 //        stopwatch = stopwatch.createStarted();
 //    }
@@ -98,7 +98,7 @@ public class FixedWindowRateLimiterSpec {
 //        }
 //    }
 //
-//    @After
+//    @AfterEach
 //    public void reset() {
 //        stopwatch.reset();
 //    }

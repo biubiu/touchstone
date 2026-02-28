@@ -1,8 +1,8 @@
 package com.shawn.touchstone.objects;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Flyweight {
 

@@ -44,6 +44,7 @@ public class SnakeGame {
                 break;
             case "U":
                 x--;
+                break;
             case "D":
                 x++;
         }

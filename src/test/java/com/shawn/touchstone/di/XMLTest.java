@@ -5,8 +5,8 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -14,9 +14,10 @@ import java.util.List;
 public class XMLTest {
     private XStream xStream;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.xStream = new XStream();
+        xStream.allowTypesByWildcard(new String[] {"com.shawn.touchstone.**"});
         xStream.alias("beans", List.class);
         xStream.processAnnotations(Bean.class);
         xStream.processAnnotations(ConstructorArg.class);

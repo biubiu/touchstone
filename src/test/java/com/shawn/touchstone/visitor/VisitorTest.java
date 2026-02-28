@@ -1,6 +1,6 @@
 package com.shawn.touchstone.visitor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;

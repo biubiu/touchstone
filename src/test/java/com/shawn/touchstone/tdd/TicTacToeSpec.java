@@ -1,22 +1,18 @@
 package com.shawn.touchstone.tdd;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TicTacToeSpec {
 
-    @Rule
-    public ExpectedException ee = ExpectedException.none();
-
     private TicTacToe ticTacToe;
 
-    @Before
+    @BeforeEach
     public void createTicTacToe() {
         ticTacToe = new TicTacToe();
     }
@@ -25,21 +21,18 @@ public class TicTacToeSpec {
      */
     @Test
     public void whenXOutsideBoardThenRuntimeExp() {
-        ee.expect(RuntimeException.class);
-        ticTacToe.play(4, 1);
+        assertThrows(RuntimeException.class, () -> ticTacToe.play(4, 1));
     }
 
     @Test
     public void whenYOutsideBoardThenRuntimeExp() {
-        ee.expect(RuntimeException.class);
-        ticTacToe.play(1, 4);
+        assertThrows(RuntimeException.class, () -> ticTacToe.play(1, 4));
     }
 
     @Test
     public void whenOccupiedThenRuntimeException() {
         ticTacToe.play(1, 1);
-        ee.expect(RuntimeException.class);
-        ticTacToe.play(1, 1);
+        assertThrows(RuntimeException.class, () -> ticTacToe.play(1, 1));
     }
 
     @Test

@@ -9,9 +9,7 @@
 package com.shawn.touchstone.collections;
 
 import com.google.common.collect.Lists;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +21,10 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ListTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void partition() {
@@ -43,17 +38,15 @@ public class ListTest {
 
     @Test
     public void testArraysToList(){
-        thrown.expect(UnsupportedOperationException.class);
         List<String> a = Arrays.asList("a", "b", "c");
         a.set(0, "m");
 
         assertThat(a.get(0), is("m"));
-        a.add("d");
+        assertThrows(UnsupportedOperationException.class, () -> a.add("d"));
     }
 
     @Test
     public void testConvariantList() {
-        thrown.expect(ClassCastException.class);
         List<String> generics = null;
         List nonGenerics = new ArrayList(10);
         nonGenerics.add(new Object());
@@ -61,12 +54,14 @@ public class ListTest {
 
         generics = nonGenerics;
         System.out.println(";");
-        String str = generics.get(0);
+        List<String> finalGenerics = generics;
+        assertThrows(ClassCastException.class, () -> {
+            String str = finalGenerics.get(0);
+        });
     }
 
     @Test
     public void testRemovingEle() {
-        thrown.expect(ConcurrentModificationException.class);
         List<String> strs = Lists.newArrayList("a", "b",  "c");
         strs.remove("a");
         assertThat(strs.size(), is(2));
@@ -81,17 +76,18 @@ public class ListTest {
         assertThat(strs.size(), is(1));
 
         strs.add("c");
-        for (String st: strs) {
-            if ("c".equals(st)) {
-                strs.remove(st);
+        assertThrows(ConcurrentModificationException.class, () -> {
+            for (String st: strs) {
+                if ("c".equals(st)) {
+                    strs.remove(st);
+                }
             }
-        }
+        });
     }
 
     @Test
     public void testSwitchWithNull() {
-        thrown.expect(NullPointerException.class);
-        switchMethod(null);
+        assertThrows(NullPointerException.class, () -> switchMethod(null));
     }
 
     private void switchMethod(String param) {

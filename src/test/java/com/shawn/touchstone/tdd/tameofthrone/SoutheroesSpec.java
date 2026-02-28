@@ -1,19 +1,19 @@
 package com.shawn.touchstone.tdd.tameofthrone;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SoutheroesSpec {
 
     private Southeroes southeroes;
 
-    @Before
+    @BeforeEach
     public void create() {
         southeroes = new Southeroes();
     }

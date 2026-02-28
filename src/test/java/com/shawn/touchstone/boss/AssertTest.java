@@ -1,8 +1,6 @@
 package com.shawn.touchstone.boss;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -16,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AssertTest {
     @Test
@@ -44,9 +42,9 @@ public class AssertTest {
     }
 
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void throwsWhenWithdrawingTooMuch() {
-        Objects.requireNonNull(null);
+        assertThrows(NullPointerException.class, () -> Objects.requireNonNull(null));
     }
 
     class InsufficientFundsException extends RuntimeException {
@@ -73,15 +71,11 @@ public class AssertTest {
 
     private Account account;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void exceptionRule() {
         account = new Account("an account name");
-        thrown.expect(InsufficientFundsException.class);
-        thrown.expectMessage("balance only 0");
-        account.withdraw(100);
+        InsufficientFundsException exp = assertThrows(InsufficientFundsException.class, () -> account.withdraw(100));
+        assertThat(exp.getMessage(), is("balance only 0"));
     }
 
     @Test

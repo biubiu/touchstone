@@ -1,8 +1,8 @@
 package com.shawn.touchstone.alg;
 
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -13,7 +13,7 @@ public class BrowserHistoryTest {
 
     private BrowserHistory browserHistory;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         browserHistory = new BrowserHistory("a");
     }

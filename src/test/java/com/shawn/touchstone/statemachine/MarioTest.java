@@ -2,9 +2,9 @@ package com.shawn.touchstone.statemachine;
 
 import com.shawn.touchstone.statemachine.branches.BranchingMarioStateMachine;
 import com.shawn.touchstone.statemachine.hardcode.LookupMarioStateMachine;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MarioTest {
 

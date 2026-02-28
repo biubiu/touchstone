@@ -1,6 +1,6 @@
 package com.shawn.touchstone.boss;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.abs;
 import static org.hamcrest.MatcherAssert.assertThat;
