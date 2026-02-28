@@ -1,16 +1,18 @@
 package com.shawn.touchstone.tdd.tameofthrone;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StrategySpec {
 
     private Strategy strategy;
 
-    @Before
+    @BeforeEach
     public void setup() {
         strategy = new Strategy();
     }

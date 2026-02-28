@@ -1,12 +1,12 @@
 package com.shawn.touchstone.boss;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileTest {
 
@@ -14,7 +14,7 @@ public class ProfileTest {
     private Question question;
     private Criteria criteria;
 
-    @Before
+    @BeforeEach
     public void create() {
         profile = new Profile("Bull Hockey.INC");
         question = new BooleanQuestion(1, "Got bonuses? ");

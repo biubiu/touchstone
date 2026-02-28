@@ -1,21 +1,19 @@
 package com.shawn.touchstone.utj2.ch1;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreCollectionTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
     @Test
     public void arithmeticMean() {
         ScoreCollection scoreCollection = new ScoreCollection();
@@ -29,8 +27,7 @@ public class ScoreCollectionTest {
 
     @Test
     public void thrownIllegalArgWhenAddNull(){
-        thrown.expect(IllegalArgumentException.class);
         ScoreCollection scoreCollection = new ScoreCollection();
-        scoreCollection.add(null);
+        assertThrows(IllegalArgumentException.class, () -> scoreCollection.add(null));
     }
 }

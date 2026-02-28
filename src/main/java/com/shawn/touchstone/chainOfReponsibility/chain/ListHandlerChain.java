@@ -23,7 +23,7 @@ public class ListHandlerChain implements HandlerChain{
 
     public void handle() {
         if (head != null) {
-            head.doHandle();
+            head.handle();
         }
     }
 }

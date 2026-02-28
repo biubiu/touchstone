@@ -3,8 +3,8 @@ package com.shawn.touchstone.alg;
 
 import static org.hamcrest.core.Is.is;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -17,7 +17,7 @@ public class SnakeGameTest {
      *  - - 2
      *  - - -
      */
-    @Before
+    @BeforeEach
     public void create() {
         int[][] food = {{0, 1}, {1, 2}};
         snakeGame = new SnakeGame(3, 3, food);

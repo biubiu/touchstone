@@ -1,11 +1,11 @@
 package com.shawn.touchstone.fuzzbuzz;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by shangfei on 23/7/17.
@@ -15,7 +15,7 @@ public class Flattener {
     public Object[] arrays;
     public Integer[] expectedResult;
 
-    @Before
+    @BeforeEach
     public void initArrays(){
         arrays = new Object[]{1, 2, new Object[]{new Object[]{3, 4}, new Object[]{new Object[]{5, 6}}, 7}};
         expectedResult = new Integer[]{1, 2, 3, 4, 5, 6, 7};

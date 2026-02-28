@@ -2,9 +2,9 @@ package com.shawn.touchstone.observers;
 
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountObTest {
 

@@ -1,20 +1,21 @@
 package com.shawn.touchstone.boss;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BearingTest {
 
-    @Test(expected=BearingOutOfRangeException.class)
+    @Test
     public void throwsOnNegativeNumber() {
-        new Bearing(-1);
+        assertThrows(BearingOutOfRangeException.class, () -> new Bearing(-1));
     }
 
-    @Test(expected=BearingOutOfRangeException.class)
+    @Test
     public void throwsWhenBearingTooLarge() {
-        new Bearing(Bearing.MAX + 1);
+        assertThrows(BearingOutOfRangeException.class, () -> new Bearing(Bearing.MAX + 1));
     }
 
     @Test

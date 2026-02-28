@@ -1,9 +1,7 @@
 package com.shawn.touchstone.cs212.pokergame;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,12 +12,11 @@ import static com.google.common.collect.ImmutableList.of;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PokerTest {
 
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
     String[] sf = "6C 7C 8C 9C TC".split(" "); //straight flush
     String[] fk = "9D 9H 9S 9C 7D".split(" "); // four of a kind
     String[] fh = "TD TC TH 7C 7D".split(" "); //full house
@@ -30,15 +27,14 @@ public class PokerTest {
     String[] sh = "2S 3S 4S 6D 7D".split(" "); //7 high
     private Poker poker;
 
-    @Before
+    @BeforeEach
     public void setup() {
         poker = new Poker();
     }
 
     @Test
     public void shouldReturnErrorWhenEmptyHands() {
-        expected.expect(IllegalArgumentException.class);
-        poker.findHand(emptyList());
+        assertThrows(IllegalArgumentException.class, () -> poker.findHand(emptyList()));
     }
 
     @Test

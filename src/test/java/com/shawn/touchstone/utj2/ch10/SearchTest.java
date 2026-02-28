@@ -1,8 +1,10 @@
 package com.shawn.touchstone.utj2.ch10;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,17 +15,17 @@ import java.util.logging.Level;
 
 import static com.shawn.touchstone.utj2.ch10.ContainsMatches.containsMatches;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SearchTest {
 
     private InputStream stream;
-    @Before
+    @BeforeEach
     public void turnoffLoggin() {
         Search.LOGGER.setLevel(Level.OFF);
     }
 
-    @After
+    @AfterEach
     public void closeSrc() throws IOException {
         stream.close();
     }

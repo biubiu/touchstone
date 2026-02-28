@@ -1,10 +1,10 @@
 package com.shawn.touchstone.utj2.ch12;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileTest {
 
@@ -24,13 +24,13 @@ public class ProfileTest {
 
     private Answer answerReimburseTuition;
 
-    @Before
+    @BeforeEach
     public void createProfile() {
         profile = new Profile();
         criteria = new Criteria();
     }
 
-    @Before
+    @BeforeEach
     public void createQuestionAndAnswer() {
         questionIsThereRelocation = new BooleanQuestion(1, "Relocation ?");
         questionIsThereReimburse = new BooleanQuestion(2, "reimburse tuition ?");

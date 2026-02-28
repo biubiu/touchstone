@@ -25,11 +25,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -45,8 +45,8 @@ public class HandlerTest {
         chain.addHandler(a);
         chain.addHandler(b);
         chain.handle();
-        verify(a, times(1)).handle();
-        verify(b, times(1)).handle();
+        verify(a, times(1)).doHandle();
+        verify(b, times(1)).doHandle();
     }
 
     @Test

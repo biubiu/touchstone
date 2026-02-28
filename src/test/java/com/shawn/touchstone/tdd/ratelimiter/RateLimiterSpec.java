@@ -1,8 +1,8 @@
 package com.shawn.touchstone.tdd.ratelimiter;
 
 import com.shawn.touchstone.tdd.ratelimiter.rule.RuleConfig;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -11,15 +11,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RateLimiterSpec {
 
     private RateLimiter rateLimiter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         rateLimiter = new RateLimiter("rule.yml");
     }

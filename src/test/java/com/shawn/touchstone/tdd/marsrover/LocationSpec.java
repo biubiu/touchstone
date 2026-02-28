@@ -1,16 +1,14 @@
 package com.shawn.touchstone.tdd.marsrover;
 
 import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LocationSpec {
 
@@ -19,10 +17,8 @@ public class LocationSpec {
     private Point point;
 
     private Point max;
-    @Rule
-    public ExpectedException ee = ExpectedException.none();
 
-    @Before
+    @BeforeEach
     public void setup() {
         point = new Point(1, 1);
         max = new Point(2, 2);

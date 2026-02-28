@@ -1,17 +1,17 @@
 package com.shawn.touchstone.idgen;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RandomIdGeneratorTest {
     private RandomIdGenerator randomIdGenerator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomIdGenerator = new RandomIdGenerator();
     }
@@ -30,11 +30,8 @@ public class RandomIdGeneratorTest {
 
     @Test
     public void testGetLastSubstrSplittedByDotNullOrEmpty() {
-        String actual = randomIdGenerator.getLastSubstrSplittedByDot(null);
-        assertNull(actual);
-
-        actual = randomIdGenerator.getLastSubstrSplittedByDot("");
-        assertEquals("", actual);
+        assertThrows(IllegalArgumentException.class, () -> randomIdGenerator.getLastSubstrSplittedByDot(null));
+        assertThrows(IllegalArgumentException.class, () -> randomIdGenerator.getLastSubstrSplittedByDot(""));
     }
 
     @Test

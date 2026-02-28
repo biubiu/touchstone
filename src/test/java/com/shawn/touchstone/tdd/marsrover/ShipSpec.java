@@ -1,16 +1,15 @@
 package com.shawn.touchstone.tdd.marsrover;
 
 import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ShipSpec {
 
@@ -26,10 +25,7 @@ public class ShipSpec {
 
     private List<Point> obstacles;
 
-    @Rule
-    public ExpectedException ee = ExpectedException.none();
-
-    @Before
+    @BeforeEach
     public void setup() {
         point = new Point(1, 1);
         location = new Location(point, Direction.NORTH);
@@ -90,8 +86,7 @@ public class ShipSpec {
 
     @Test
     public void whenCollideWithObstaclesShouldThrowRuntimeException() {
-        ee.expect(RuntimeException.class);
-        ee.expectMessage(format("The point %s collides with obstacle", new Point(2, 3)));
-        ship.execute("FFRF");
+        RuntimeException exp = assertThrows(RuntimeException.class, () -> ship.execute("FFRF"));
+        assertThat(exp.getMessage(), is(format("The point %s collides with obstacle", new Point(2, 3))));
     }
 }

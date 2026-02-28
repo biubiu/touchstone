@@ -4,13 +4,14 @@ import com.google.common.base.MoreObjects;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class XMLBugTest {
 
     @Test
     public void bugs() {
         XStream xStream = new XStream();
+        xStream.allowTypesByWildcard(new String[] {"com.shawn.touchstone.**"});
         xStream.processAnnotations(BB.class);
         //will parse correctly when changing 'class' to something else like 'clazz'
         final String xml = ""//

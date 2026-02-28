@@ -1,18 +1,18 @@
 package com.shawn.touchstone.boss;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreCollectionTest {
 
     private ScoreCollection collection;
 
-    @Before
+    @BeforeEach
     public void create() {
         collection = new ScoreCollection();
     }

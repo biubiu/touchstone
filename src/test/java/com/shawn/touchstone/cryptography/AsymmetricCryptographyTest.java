@@ -1,8 +1,8 @@
 package com.shawn.touchstone.cryptography;
 
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -14,7 +14,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AsymmetricCryptographyTest {
 
@@ -63,7 +63,7 @@ public class AsymmetricCryptographyTest {
             "\n" +
             "As the web form is submitted from a non SafeShare website and calling the API is cross the domain, we need to tweak CORS settings on SafeShare backend side.";
 
-    @Before
+    @BeforeEach
     public void setup() throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
         EncryptionKeys keys = new EncryptionKeys(LEN);
         this.privateKey = keys.getPrivateKey();

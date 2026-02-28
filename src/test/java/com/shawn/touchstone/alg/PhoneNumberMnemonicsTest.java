@@ -1,19 +1,21 @@
 package com.shawn.touchstone.alg;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PhoneNumberMnemonicsTest {
 
     private PhoneNumberMnemonics phoneNumberMnemonics;
 
-    @Before
+    @BeforeEach
     public void init() {
         phoneNumberMnemonics = new PhoneNumberMnemonics();
     }

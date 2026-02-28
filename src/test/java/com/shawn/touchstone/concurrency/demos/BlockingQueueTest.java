@@ -1,8 +1,8 @@
 package com.shawn.touchstone.concurrency.demos;
 
 import com.shawn.touchstone.concurrency.prac.blockingqueue.BlockingQueueWithMutex;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,7 +10,7 @@ public class BlockingQueueTest {
 
     BlockingQueueWithMutex<Integer> bq;
 
-    @Before
+    @BeforeEach
     public void setup() {
         bq = new BlockingQueueWithMutex<>(5);
     }

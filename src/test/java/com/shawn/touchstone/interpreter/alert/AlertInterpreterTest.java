@@ -9,19 +9,15 @@
 package com.shawn.touchstone.interpreter.alert;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AlertInterpreterTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void interpretShouldRetTrue() {
@@ -36,11 +32,11 @@ public class AlertInterpreterTest {
 
     @Test
     public void interpretShouldThrowRuntimeExp() {
-        thrown.expect(RuntimeException.class);
-
         String rule = "key1 > 100|| key2 < 100 || key3 = 88";
-        AlertInterpreter interpreter = new AlertInterpreter(rule);
         Map<String, Long> stats = ImmutableMap.of("key2", 121l);
-        interpreter.interpret(stats);
+        assertThrows(RuntimeException.class, () -> {
+            AlertInterpreter interpreter = new AlertInterpreter(rule);
+            interpreter.interpret(stats);
+        });
     }
 }

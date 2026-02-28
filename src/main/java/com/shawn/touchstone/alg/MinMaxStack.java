@@ -26,7 +26,6 @@ public class MinMaxStack {
         if (size() == 0) {
             throw new RuntimeException("empty stack");
         }
-        ArrayList<Integer> arr = new ArrayList<>();
         minMaxStack.remove(minMaxStack.size() - 1);
         return arr.remove(arr.size() - 1);
     }

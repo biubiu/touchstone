@@ -1,17 +1,19 @@
 package com.shawn.touchstone.utj2.ch7;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SparseArrayTest {
 
     private SparseArray sparseArray;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         sparseArray = new SparseArray();
     }
@@ -24,7 +26,7 @@ public class SparseArrayTest {
         assertThat(sparseArray.get(7), is("seven"));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
     }
 }
