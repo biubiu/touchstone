@@ -30,6 +30,7 @@ public class UserOnboardingWorkflowImpl implements UserOnboardingWorkflow {
 
         activities.trackAnalytics(request.getUserId(), "account_created");
 
+        status = OnboardingStatus.PENDING_FOLLOWUP;
         Workflow.sleep(Duration.ofSeconds(30));
 
         activities.sendFollowUpEmail(request.getEmail(), request.getName());
