@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.xstream)
     implementation(libs.jedis)
     implementation(libs.snakeyaml)
+    implementation(libs.temporal.sdk)
+    runtimeOnly(libs.slf4j.simple)
 
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)

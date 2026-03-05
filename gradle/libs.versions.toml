@@ -16,6 +16,8 @@ junit-vintage = "5.11.4"
 hamcrest = "3.0"
 mockito = "5.15.2"
 assertj = "3.27.3"
+temporal = "1.26.0"
+slf4j = "2.0.16"
 
 [libraries]
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
@@ -37,6 +39,8 @@ hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest"
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito" }
 assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+temporal-sdk = { group = "io.temporal", name = "temporal-sdk", version.ref = "temporal" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 
 [bundles]
 testing = ["junit-jupiter", "junit-vintage", "hamcrest", "mockito-core", "mockito-junit-jupiter", "assertj-core"]
